@@ -1,6 +1,7 @@
 package seedu.calidr.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.calidr.commons.core.Messages.MESSAGE_DATE_TIME_FORMAT;
 import static seedu.calidr.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
@@ -173,7 +174,7 @@ public class ParserUtil {
             return dateTime;
 
         } catch (DateTimeParseException e) {
-            throw new ParseException("Date-times should be of the format DD-MM-YYYY hhmm");
+            throw new ParseException(MESSAGE_DATE_TIME_FORMAT);
         }
     }
 
@@ -210,6 +211,10 @@ public class ParserUtil {
 
         LocalDateTime from = parseDateTime(trimmedFromDateTime);
         LocalDateTime to = parseDateTime(trimmedToDateTime);
+
+        if (!EventDateTimes.isValidEventDateTimes(from, to)) {
+            throw new ParseException(EventDateTimes.MESSAGE_CONSTRAINTS);
+        }
 
         return new EventDateTimes(from, to);
     }
