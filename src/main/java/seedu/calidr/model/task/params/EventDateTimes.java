@@ -37,7 +37,7 @@ public class EventDateTimes {
      * Returns true if a particular set of START and END date-times
      * is valid.
      */
-    public boolean isValidEventDateTimes(LocalDateTime start, LocalDateTime end) {
+    public static boolean isValidEventDateTimes(LocalDateTime start, LocalDateTime end) {
         return end.isAfter(start);
     }
 
