@@ -86,7 +86,8 @@ public class EditTaskCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Task createEditedTask(Task taskToEdit, EditTaskDescriptor editTaskDescriptor) {
+    private static Task createEditedTask(Task taskToEdit, EditTaskDescriptor editTaskDescriptor)
+            throws CommandException {
         assert taskToEdit != null;
 
         if (taskToEdit instanceof ToDo) {
@@ -107,6 +108,11 @@ public class EditTaskCommand extends Command {
                     .orElse(eventToEdit.getEventDateTimes().from);
             LocalDateTime updatedToDateTime = editEventTaskDescriptor.getToDateTime()
                     .orElse(eventToEdit.getEventDateTimes().to);
+
+            if (!EventDateTimes.isValidEventDateTimes(updatedFromDateTime, updatedToDateTime)) {
+                throw new CommandException(EventDateTimes.MESSAGE_CONSTRAINTS);
+            }
+
             EventDateTimes updatedEventTimes = new EventDateTimes(updatedFromDateTime, updatedToDateTime);
 
             return new Event(updatedTitle, updatedEventTimes);
