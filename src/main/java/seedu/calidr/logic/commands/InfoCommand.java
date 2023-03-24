@@ -8,9 +8,11 @@ import seedu.calidr.commons.core.Messages;
 import seedu.calidr.commons.core.index.Index;
 import seedu.calidr.logic.commands.exceptions.CommandException;
 import seedu.calidr.model.Model;
-import seedu.calidr.model.person.Person;
 import seedu.calidr.model.task.Task;
 
+/**
+ * Displays the information of the specified task.
+ */
 public class InfoCommand extends Command {
 
     public static final String COMMAND_WORD = "info";
