@@ -49,6 +49,10 @@ public class UiManager implements Ui {
         alert.showAndWait();
     }
 
+    void showAlertDialogAndWait(String title, String headerText, String contentText) {
+        showAlertDialogAndWait(mainWindow.getPrimaryStage(), title, headerText, contentText);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
@@ -71,9 +75,6 @@ public class UiManager implements Ui {
         return new Image(Objects.requireNonNull(MainApp.class.getResourceAsStream(UiManager.ICON_APPLICATION)));
     }
 
-    void showAlertDialogAndWait(String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), title, headerText, contentText);
-    }
 
     /**
      * Shows an error alert dialog with {@code title} and error message, {@code e},

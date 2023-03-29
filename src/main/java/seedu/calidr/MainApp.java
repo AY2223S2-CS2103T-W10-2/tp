@@ -22,6 +22,8 @@ import seedu.calidr.model.ReadOnlyUserPrefs;
 import seedu.calidr.model.UserPrefs;
 import seedu.calidr.model.tasklist.TaskList;
 import seedu.calidr.model.util.SampleDataUtil;
+import seedu.calidr.storage.CalendarStorage;
+import seedu.calidr.storage.Ical4jCalendarStorage;
 import seedu.calidr.storage.JsonUserPrefsStorage;
 import seedu.calidr.storage.Storage;
 import seedu.calidr.storage.StorageManager;
@@ -54,7 +56,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        CalendarStorage calendarStorage = new CalendarStorage();
+        CalendarStorage calendarStorage = new Ical4jCalendarStorage();
         storage = new StorageManager(calendarStorage, userPrefsStorage);
 
         initLogging(config);
