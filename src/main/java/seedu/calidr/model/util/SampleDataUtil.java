@@ -1,64 +1,81 @@
 package seedu.calidr.model.util;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import seedu.calidr.model.AddressBook;
-import seedu.calidr.model.ReadOnlyAddressBook;
-import seedu.calidr.model.person.Address;
-import seedu.calidr.model.person.Email;
-import seedu.calidr.model.person.Name;
-import seedu.calidr.model.person.Person;
-import seedu.calidr.model.person.Phone;
-import seedu.calidr.model.person.Remark;
+import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.Event;
+import seedu.calidr.model.task.Task;
+import seedu.calidr.model.task.ToDo;
+import seedu.calidr.model.task.params.Description;
+import seedu.calidr.model.task.params.EventDateTimes;
+import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Title;
+import seedu.calidr.model.task.params.TodoDateTime;
+import seedu.calidr.model.tasklist.TaskList;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
 
-    public static final Remark EMPTY_REMARK = new Remark("");
 
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_REMARK,
-                getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_REMARK,
-                getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_REMARK,
-                getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), EMPTY_REMARK,
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"), EMPTY_REMARK,
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"), EMPTY_REMARK,
-                getTagSet("colleagues"))
+    public static Task[] getSampleTasks() {
+        return new Task[]{
+                new ToDo(
+                        new Title("CS2101 Quiz 2"),
+                        new TodoDateTime(
+                                LocalDateTime.of(2023, 3, 10, 10, 10)
+                        )
+                ),
+                new Event(
+                        new Title("CS2103T Lecture 1"),
+                        new EventDateTimes(
+                                LocalDateTime.of(2023, 3, 10, 10, 10),
+                                LocalDateTime.of(2023, 3, 11, 10, 10)
+                        )
+                ),
+                ((Supplier<ToDo>) () -> {
+                    ToDo temp = new ToDo(
+                            new Title("CS2101 Quiz 3"),
+                            new TodoDateTime(
+                                    LocalDateTime.of(2023, 3, 11, 10, 10)
+                            )
+                    );
+                    temp.setDone(true);
+                    temp.setPriority(Priority.HIGH);
+                    return temp;
+                }).get(),
+                ((Supplier<Event>) () -> {
+                    Event temp = new Event(
+                            new Title("CS2103T Lecture 2"),
+                            new EventDateTimes(
+                                    LocalDateTime.of(2023, 3, 11, 10, 10),
+                                    LocalDateTime.of(2023, 3, 12, 10, 10)
+                            )
+                    );
+                    temp.setPriority(Priority.LOW);
+                    temp.setDescription(new Description("This is a description"));
+                    return temp;
+                }).get()
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
-        for (Person samplePerson : getSamplePersons()) {
-            sampleAb.addPerson(samplePerson);
-        }
-        return sampleAb;
+    public static ReadOnlyTaskList getSampleTaskList() {
+        TaskList sampleTaskList = new TaskList();
+        sampleTaskList.setTasks(Arrays.asList(getSampleTasks()));
+        return sampleTaskList;
     }
 
     /**
      * Returns a tag set containing the list of strings given.
      */
     public static Set<Tag> getTagSet(String... strings) {
-        return Arrays.stream(strings)
-                .map(Tag::new)
-                .collect(Collectors.toSet());
+        return Arrays.stream(strings).map(Tag::new).collect(Collectors.toSet());
     }
 
 }

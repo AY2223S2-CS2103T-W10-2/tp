@@ -1,51 +1,58 @@
 package seedu.calidr.testutil;
 
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_BY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Set;
 
-import seedu.calidr.logic.commands.AddCommand;
-import seedu.calidr.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.calidr.model.person.Person;
+import seedu.calidr.logic.commands.AddEventCommand;
+import seedu.calidr.logic.commands.AddTodoCommand;
 import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.Event;
+import seedu.calidr.model.task.Task;
+import seedu.calidr.model.task.ToDo;
 
 /**
- * A utility class for Person.
+ * A utility class for Tasks.
  */
-public class PersonUtil {
+public class TaskUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code task}.
      */
-    public static String getAddCommand(Person person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    public static String getAddCommand(Task task) {
+        if (task instanceof ToDo) {
+            return AddTodoCommand.COMMAND_WORD + " " + getTodoDetails((ToDo) task);
+        } else {
+            return AddEventCommand.COMMAND_WORD + " " + getEventDetails((Event) task);
+        }
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code task}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getTodoDetails(ToDo todo) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        sb.append(PREFIX_REMARK + person.getRemark().value + " ");
-        person.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
+        sb.append(PREFIX_TITLE).append(todo.getTitle().value).append(" ");
+        sb.append(PREFIX_BY).append(todo.getBy().value).append(" ");
+        sb.append(PREFIX_PRIORITY).append(todo.getPriority().toString()).append(" ");
+        if (todo.getDescription().isPresent()) {
+            sb.append(PREFIX_DESCRIPTION).append(todo.getDescription().get().value).append(" ");
+        }
+        todo.getTags().stream().forEach(
+                s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }
 
+    // TODO: Add getEventDetails method
+
     /**
-     * Returns the part of command string for the given {@code EditPersonDescriptor}'s details.
+     * Returns the part of command string for the given {@code EditTaskDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
+    public static String getEditTaskDescriptorDetails(EditTaskDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));

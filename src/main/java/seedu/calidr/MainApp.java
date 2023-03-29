@@ -15,15 +15,13 @@ import seedu.calidr.commons.util.ConfigUtil;
 import seedu.calidr.commons.util.StringUtil;
 import seedu.calidr.logic.Logic;
 import seedu.calidr.logic.LogicManager;
-import seedu.calidr.model.AddressBook;
 import seedu.calidr.model.Model;
 import seedu.calidr.model.ModelManager;
-import seedu.calidr.model.ReadOnlyAddressBook;
+import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.ReadOnlyUserPrefs;
 import seedu.calidr.model.UserPrefs;
+import seedu.calidr.model.tasklist.TaskList;
 import seedu.calidr.model.util.SampleDataUtil;
-import seedu.calidr.storage.AddressBookStorage;
-import seedu.calidr.storage.JsonAddressBookStorage;
 import seedu.calidr.storage.JsonUserPrefsStorage;
 import seedu.calidr.storage.Storage;
 import seedu.calidr.storage.StorageManager;
@@ -56,8 +54,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        CalendarStorage calendarStorage = new CalendarStorage();
+        storage = new StorageManager(calendarStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -74,20 +72,20 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyTaskList> taskListOptional;
+        ReadOnlyTaskList initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (addressBookOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            taskListOptional = storage.readTaskList();
+            if (taskListOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with a sample TaskList");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = taskListOptional.orElseGet(SampleDataUtil::getSampleTaskList);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty TaskList");
+            initialData = new TaskList();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty TaskList");
+            initialData = new TaskList();
         }
 
         return new ModelManager(initialData, userPrefs);

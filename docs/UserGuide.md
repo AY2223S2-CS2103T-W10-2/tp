@@ -115,18 +115,18 @@ d. **Result panel**: The result panel is where Calidr will display the result of
 
 ## :paperclip: Features
 
-#### View help: `help`
+### View help: `help`
 
 Shows a message explaning how to access the help page.
 The help page provides information about how to use the application and its features.
 
-#### Adding tasks
+### Adding tasks
 
 Please refer to the terminology [specified above](#data-terminology) if you are unfamiliar with the terms used.
 
 <!-- end of the list -->
 
-- #### Adding a ToDo: `todo`
+#### Adding a ToDo: `todo`
   Adds a new ToDo with the given title, date-time, description, location and tags to the list of tasks.
 
   Format: `todo t/ <title> by/ <date-time> [d/ <description>] [l/ <location>] [p/ <priority>] [tag/ <tag>]...`
@@ -135,7 +135,7 @@ Please refer to the terminology [specified above](#data-terminology) if you are 
     - `todo t/ CS2103T tP by/ 31-03-2023 2359`
     - `todo t/ CS2103T tP by/ today d/ Complete the tP l/ Online p/ HIGH tag/ CS2103T tag/ tP`
 
-- #### Adding an Event: `event`
+#### Adding an Event: `event`
   Adds a new event with the given title, starting date-time, ending date-time, description, location and tags to the
   list of tasks.
 
@@ -145,13 +145,13 @@ Please refer to the terminology [specified above](#data-terminology) if you are 
     - `event t/ CS2103T Lecture from/ 31-03-2023 1400 to/ 31-03-2023 1600`
     - `event t/ CS2103T Lecture from/ today to/ 31-03-2023 1600 d/ Lecture on UML l/ Online p/ HIGH tag/ CS2103T tag/ Lecture`
 
-#### Searching and filtering for tasks: `search`
+### Searching and filtering for tasks: `search`
 
 Searches for tasks with matching keywords in their fields. Filtered tasks are displayed in a list to the side.
 
 <!--- TODO -->
 
-#### Deleting a task: `delete`
+### Deleting a task: `delete`
 
 Deletes one or more tasks from the calendar.
 
@@ -159,7 +159,7 @@ Format: `delete TASK_INDEX`
 
 Example: `delete 2`
 
-#### Editing task details: `edit`
+### Editing task details: `edit`
 
 Edits information pertaining to a particular task given by the index.
 
@@ -168,7 +168,7 @@ Format: `edit TASK_INDEX (OPTION <argument>)...`
 Example: for a task which is an event of index 4,
 `edit 4 from/ 05-03-2023 2000 to/ 06-03-2023 2000`
 
-#### Switching to a different layout: `page`
+### Switching to a different layout: `page`
 
 By default, the calendar panel is displayed in a monthly-layout. A weekly or daily-layout is supported if you wish to
 view more or less tasks.
@@ -179,7 +179,7 @@ Example: `page week`
 
 ![A comparison of the three layouts](images/Ui_pages.png)
 
-#### Viewing a different date: `view`
+### Viewing a different date: `view`
 
 By default, the calendar panel is focused on the current date. When you wish to view a different month, week or day, you
 can use the `view` command.
@@ -191,7 +191,7 @@ Example:
 - `view 01-03-2023`
 - `view next week`
 
-#### Showing all the details of a task: `show`
+### Showing all the details of a task: `show`
 
 The GUI displays a condensed representation of tasks in both the calendar and list panels. This commmand shows all the
 details of a particular task, including its description, location and tags, in a pop-up dialog.
@@ -215,14 +215,14 @@ Example: `show 2`
 | **View Date**   | `view <date-time>`<br> e.g., `view next week`                                                                                                                                                                                                                        |
 | **Show Task**   | `show TASK_INDEX`<br> e.g., `show 1`                                                                                                                                                                                                                                 |
 
-### Other
+## Other
 
-#### Saving your data
+### Saving your data
 
 Calidr calendar information is saved in the hard disk automatically after any modification command. The data is stored
 as an [ics file](https://www.ical4j.org/).
 
-#### Editing the data file
+### Editing the data file
 
 The `cal.ics` save file is located in the directory the program resides in (i.e. `[root_directory]/cal.ics`). Advanced
 users are welcome to manipulate data directly by editing the save file.

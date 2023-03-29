@@ -1,6 +1,5 @@
 package seedu.calidr.logic;
 
-import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -12,9 +11,7 @@ import seedu.calidr.logic.commands.exceptions.CommandException;
 import seedu.calidr.logic.parser.CalidrParser;
 import seedu.calidr.logic.parser.exceptions.ParseException;
 import seedu.calidr.model.Model;
-import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.ReadOnlyTaskList;
-import seedu.calidr.model.person.Person;
 import seedu.calidr.model.task.Task;
 import seedu.calidr.storage.Storage;
 
@@ -27,7 +24,6 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    // private final AddressBookParser addressBookParser;
 
     private final CalidrParser calidrParser;
 
@@ -37,7 +33,6 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        // addressBookParser = new AddressBookParser();
         calidrParser = new CalidrParser();
     }
 
@@ -59,21 +54,6 @@ public class LogicManager implements Logic {
          */
 
         return commandResult;
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return model.getAddressBook();
-    }
-
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
-    }
-
-    @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
     }
 
     @Override
