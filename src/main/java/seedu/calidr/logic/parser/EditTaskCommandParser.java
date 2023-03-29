@@ -10,7 +10,6 @@ import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TO;
 
 import seedu.calidr.commons.core.index.Index;
-import seedu.calidr.logic.commands.EditCommand;
 import seedu.calidr.logic.commands.EditTaskCommand;
 import seedu.calidr.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.calidr.logic.parser.exceptions.ParseException;
@@ -61,7 +60,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         }
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditTaskCommand(index, editTaskDescriptor);

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import seedu.calidr.commons.core.LogsCenter;
 import seedu.calidr.commons.exceptions.DataConversionException;
-import seedu.calidr.model.ReadOnlyAddressBook;
+import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.ReadOnlyUserPrefs;
 import seedu.calidr.model.UserPrefs;
 
@@ -17,14 +17,15 @@ import seedu.calidr.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
-    private UserPrefsStorage userPrefsStorage;
+
+    private final CalendarStorage calendarStorage;
+    private final UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
+     * Creates a {@code StorageManager} with the given {@code CalendarStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
-        this.addressBookStorage = addressBookStorage;
+    public StorageManager(CalendarStorage calendarStorage, UserPrefsStorage userPrefsStorage) {
+        this.calendarStorage = calendarStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -45,34 +46,14 @@ public class StorageManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
-
-    // ================ AddressBook methods ==============================
-
     @Override
-    public Path getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+    public Optional<ReadOnlyTaskList> readTaskList() throws DataConversionException, IOException {
+        return calendarStorage.readTaskList();
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
-    }
-
-    @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
-    }
-
-    @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
-    }
-
-    @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+    public void saveTaskList(ReadOnlyTaskList taskList) throws IOException {
+        calendarStorage.saveTaskList(taskList);
     }
 
 }

@@ -1,8 +1,7 @@
 package seedu.calidr.logic.commands;
 
 import static seedu.calidr.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.calidr.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.calidr.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.calidr.testutil.TypicalTasks.getTypicalTaskList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import seedu.calidr.model.Model;
 import seedu.calidr.model.ModelManager;
 import seedu.calidr.model.UserPrefs;
-import seedu.calidr.model.person.Person;
 import seedu.calidr.testutil.PersonBuilder;
 
 /**
@@ -22,7 +20,7 @@ public class AddCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalTaskList(), new UserPrefs());
     }
 
     @Test

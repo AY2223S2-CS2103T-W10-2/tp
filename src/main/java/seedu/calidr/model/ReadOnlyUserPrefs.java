@@ -1,7 +1,5 @@
 package seedu.calidr.model;
 
-import java.nio.file.Path;
-
 import seedu.calidr.commons.core.GuiSettings;
 
 /**
@@ -10,7 +8,5 @@ import seedu.calidr.commons.core.GuiSettings;
 public interface ReadOnlyUserPrefs {
 
     GuiSettings getGuiSettings();
-
-    Path getAddressBookFilePath();
 
 }
