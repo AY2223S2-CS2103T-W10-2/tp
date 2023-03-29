@@ -134,6 +134,10 @@ public interface Model {
      */
     void setTask(Task target, Task editedTask);
 
+    void markTask(Task task);
+
+    void unmarkTask(Task task);
+
     /**
      * Returns an unmodifiable view of the filtered task list
      */

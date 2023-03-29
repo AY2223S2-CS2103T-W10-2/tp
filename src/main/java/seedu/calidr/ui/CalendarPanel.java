@@ -2,7 +2,6 @@ package seedu.calidr.ui;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -10,8 +9,7 @@ import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.view.DateControl;
-import com.calendarfx.view.EntryViewBase;
+import com.calendarfx.view.DayViewBase;
 import com.calendarfx.view.page.DayPage;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.PageBase;
@@ -19,20 +17,12 @@ import com.calendarfx.view.page.WeekPage;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import seedu.calidr.commons.core.LogsCenter;
 import seedu.calidr.commons.util.TaskEntryUtil;
 import seedu.calidr.model.PageType;
@@ -48,7 +38,7 @@ import seedu.calidr.model.task.ToDo;
 public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(CalendarPanel.class);
 
     private final CalendarSource calendarSource = new CalendarSource("My Calendars");
 
@@ -71,9 +61,9 @@ public class CalendarPanel extends UiPart<Region> {
     private DayPage dayPage;
 
     private final Map<PageType, PageBase> calendarViews = Map.of(
-        PageType.DAY, dayPage,
-        PageType.WEEK, weekPage,
-        PageType.MONTH, monthPage
+            PageType.DAY, dayPage,
+            PageType.WEEK, weekPage,
+            PageType.MONTH, monthPage
     );
 
     private PageType currentPage = PageType.MONTH;
@@ -101,8 +91,11 @@ public class CalendarPanel extends UiPart<Region> {
 
         calendarSource.getCalendars().addAll(calendarTodos, calendarEvents);
 
+        dayPage.getDetailedDayView()
+                .getDayView()
+                .setEarlyLateHoursStrategy(DayViewBase
+                        .EarlyLateHoursStrategy.SHOW);
         calendarViews.forEach((key, view) -> {
-            view.setEntryContextMenuCallback(this::entryContextMenuCallback);
             view.setContextMenuCallback(param -> null);
             view.setShowNavigation(false);
             view.getCalendarSources().add(calendarSource);
@@ -114,51 +107,12 @@ public class CalendarPanel extends UiPart<Region> {
         goToToday();
     }
 
-    private ContextMenu entryContextMenuCallback(DateControl.EntryContextMenuParameter param) {
-        EntryViewBase<?> entryView = param.getEntryView();
-        TaskEntry entry = (TaskEntry) entryView.getEntry();
-
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem informationItem = new MenuItem("Information");
-        informationItem.setOnAction(evt ->
-            showInformationDialog(entry)
-        );
-        contextMenu.getItems().add(informationItem);
-
-        return contextMenu;
-    }
-
     public PageBase getActivePage() {
         return calendarViews.get(currentPage);
     }
 
     public void setAllPages(Consumer<PageBase> consumer) {
         calendarViews.forEach((key, view) -> consumer.accept(view));
-    }
-
-    private void showInformationDialog(TaskEntry entry) {
-        Window window = this.getRoot().getScene().getWindow();
-        final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(window);
-        VBox dialogVbox = new VBox(10);
-        dialogVbox.setPadding(new javafx.geometry.Insets(10));
-        ArrayList<String> information = new ArrayList<>();
-        information.add(entry.getTitle());
-        information.add(entry.getInterval().getStartDate().toString());
-        information.add(entry.getInterval().getEndDate().toString());
-        information.add("Is done: " + entry.getIsDone());
-        information.add("Priority: " + entry.getPriority());
-        dialogVbox.getChildren().addAll(
-                information.stream().map(Text::new).peek(
-                        text -> text.wrappingWidthProperty()
-                                .bind(dialogVbox.widthProperty())
-                ).toArray(Node[]::new)
-        );
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        dialog.setScene(dialogScene);
-        dialog.show();
     }
 
     public void setDate(LocalDate date) {

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import seedu.calidr.model.PageType;
+import seedu.calidr.model.task.Task;
 
 /**
  * Represents the result of a command execution.
@@ -36,18 +37,30 @@ public class CommandResult {
     private final Optional<LocalDate> date;
 
     /**
+     * The task to be shown in the popup.
+     */
+    private final Optional<Task> popupTask;
+
+    /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, PageType pageType, LocalDate date) {
+    public CommandResult(String feedbackToUser,
+                         boolean showHelp,
+                         boolean exit,
+                         PageType pageType,
+                         LocalDate date,
+                         Task popupTask
+    ) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
         this.pageType = Optional.ofNullable(pageType);
         this.date = Optional.ofNullable(date);
+        this.popupTask = Optional.ofNullable(popupTask);
     }
 
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this(feedbackToUser, showHelp, exit, null, null);
+        this(feedbackToUser, showHelp, exit, null, null, null);
     }
 
 
@@ -79,6 +92,10 @@ public class CommandResult {
         return date;
     }
 
+    public Optional<Task> getPopupTask() {
+        return popupTask;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -95,12 +112,13 @@ public class CommandResult {
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit
                 && pageType.equals(otherCommandResult.pageType)
-                && date.equals(otherCommandResult.date);
+                && date.equals(otherCommandResult.date)
+                && popupTask.equals(otherCommandResult.popupTask);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, pageType, date);
+        return Objects.hash(feedbackToUser, showHelp, exit, pageType, date, popupTask);
     }
 
 }

@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class TodoDateTime {
 
+    public static final DateTimeFormatter PRINT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a");
+
     public final LocalDateTime value;
 
     /**
@@ -28,8 +30,7 @@ public class TodoDateTime {
      * Returns the String representation of the TodoDateTime object.
      */
     public String toString() {
-        DateTimeFormatter formatToPrint = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mm a");
-        return "by: " + value.format(formatToPrint);
+        return "by: " + value.format(PRINT_FORMAT);
     }
 
     @Override

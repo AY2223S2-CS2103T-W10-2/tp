@@ -23,7 +23,9 @@ import seedu.calidr.model.person.Name;
 import seedu.calidr.model.person.Phone;
 import seedu.calidr.model.person.Remark;
 import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.EventDateTimes;
+import seedu.calidr.model.task.params.Priority;
 import seedu.calidr.model.task.params.Title;
 import seedu.calidr.model.task.params.TodoDateTime;
 
@@ -173,6 +175,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String description} into a {@code Description}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code description} is invalid.
+     */
+    public static Description parseDescription(String description) throws ParseException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new ParseException(Description.MESSAGE_CONSTRAINTS);
+        }
+        return new Description(trimmedDescription);
+    }
+
+    /**
      * Parses a {@code String dateText} into a {@code LocalDate} object.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -247,6 +264,10 @@ public class ParserUtil {
         LocalDateTime from = parseDateTime(fromDateTime);
         LocalDateTime to = parseDateTime(toDateTime);
 
+        if (!EventDateTimes.isValidEventDateTimes(from, to)) {
+            throw new ParseException(EventDateTimes.MESSAGE_CONSTRAINTS);
+        }
+
         return new EventDateTimes(from, to);
     }
 
@@ -282,5 +303,25 @@ public class ParserUtil {
             throw new ParseException("Invalid page type.");
         }
         return pageType;
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     *
+     * @param priorityString The string containing the priority.
+     * @return A {@code Priority} object representing the given priority.
+     * @throws ParseException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priorityString) throws ParseException {
+        requireNonNull(priorityString);
+
+        Priority priority;
+        try {
+            priority = Priority.valueOf(priorityString.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(Priority.MESSAGE_CONSTRAINTS);
+        }
+
+        return priority;
     }
 }

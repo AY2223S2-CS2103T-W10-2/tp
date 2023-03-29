@@ -31,6 +31,7 @@ public class PageCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(String.format(MESSAGE_SUCCESS, pageType), false, false, pageType, null);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, pageType),
+                false, false, pageType, null, null);
     }
 }

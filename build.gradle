@@ -71,6 +71,12 @@ dependencies {
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jUnitVersion
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'seedu.calidr.Main'
+    }
+}
+
 shadowJar {
     archiveFileName = 'calidr.jar'
 }

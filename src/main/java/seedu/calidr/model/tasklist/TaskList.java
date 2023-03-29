@@ -7,7 +7,6 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.task.Task;
-import seedu.calidr.model.task.UniqueTaskList;
 import seedu.calidr.model.task.params.Priority;
 
 /**

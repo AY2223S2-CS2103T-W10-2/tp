@@ -18,7 +18,8 @@ We are a team based in the [School of Computing, National University of Singapor
 [[GitHub](https://github.com/Flash161203)]
 [[Portfolio](team/flash161203.md)]
 
-* Role: `undecided`
+* Role: Developer
+* Responsibilities: Model Design
 
 <br>
 
@@ -29,7 +30,8 @@ We are a team based in the [School of Computing, National University of Singapor
 [[GitHub](https://github.com/Enigmatrix)]
 [[Portfolio](team/enigmatrix.md)]
 
-* Role: `undecided`
+* Role: Developer
+* Responsibilities: Data & Storage
 
 <br>
 
@@ -40,7 +42,8 @@ We are a team based in the [School of Computing, National University of Singapor
 [[GitHub](https://github.com/Nafeij)]
 [[Portfolio](team/nafeij.md)]
 
-* Role: `undecided`
+* Role: Developer
+* Responsibilities: UI
 
 <br>
 
@@ -51,4 +54,5 @@ We are a team based in the [School of Computing, National University of Singapor
 [[GitHub](https://github.com/vaidyanaath)]
 [[Portfolio](team/vaidyanaath.md)]
 
-* Role: `undecided`
+* Role: Developer
+* Responsibilities: Command Design

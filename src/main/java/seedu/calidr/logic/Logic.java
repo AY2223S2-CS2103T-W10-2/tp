@@ -10,6 +10,7 @@ import seedu.calidr.logic.parser.exceptions.ParseException;
 import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.person.Person;
+import seedu.calidr.model.task.Task;
 
 /**
  * API of the Logic component
@@ -54,4 +55,6 @@ public interface Logic {
 
     //========================For Calidr=========================================================
     ReadOnlyTaskList getTaskList();
+
+    ObservableList<Task> getFilteredTaskList();
 }

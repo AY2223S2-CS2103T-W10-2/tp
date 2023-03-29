@@ -19,9 +19,13 @@ public class ViewCommandParser implements Parser<ViewDateCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ViewDateCommand parse(String args) throws ParseException {
+        args = args.trim();
+        if (args.isEmpty()) {
+            return new ViewDateCommand(LocalDate.now());
+        }
         LocalDate date;
         try {
-            date = ParserUtil.parseDate(args.trim());
+            date = ParserUtil.parseDate(args);
         } catch (ParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
         }

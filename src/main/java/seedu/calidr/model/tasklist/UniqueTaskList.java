@@ -1,4 +1,4 @@
-package seedu.calidr.model.task;
+package seedu.calidr.model.tasklist;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.calidr.commons.util.CollectionUtil.requireAllNonNull;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.calidr.model.task.Task;
 import seedu.calidr.model.task.exceptions.DuplicateTaskException;
 import seedu.calidr.model.task.exceptions.TaskNotFoundException;
 import seedu.calidr.model.task.params.Priority;
@@ -123,7 +124,7 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.get(targetIndex).setPriority(priority);
     }
 
-    public void setTasks(seedu.calidr.model.task.UniqueTaskList replacement) {
+    public void setTasks(UniqueTaskList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -156,8 +157,8 @@ public class UniqueTaskList implements Iterable<Task> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.calidr.model.task.UniqueTaskList // instanceof handles nulls
-                && internalList.equals(((seedu.calidr.model.task.UniqueTaskList) other).internalList));
+                || (other instanceof UniqueTaskList // instanceof handles nulls
+                && internalList.equals(((UniqueTaskList) other).internalList));
     }
 
     @Override

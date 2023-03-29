@@ -34,6 +34,6 @@ public class ViewDateCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         return new CommandResult(String.format(MESSAGE_SUCCESS, toDate),
-                false, false, null, toDate);
+                false, false, null, toDate, null);
     }
 }

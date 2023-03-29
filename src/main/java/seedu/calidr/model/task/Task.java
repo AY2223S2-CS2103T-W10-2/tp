@@ -1,15 +1,18 @@
 package seedu.calidr.model.task;
 
+import java.util.Optional;
+
+import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.Priority;
 import seedu.calidr.model.task.params.Title;
 
 /**
- * Represents a task with the title of the task and
- * the status of the task - whether it is done.
+ * Represents a task.
  */
 public abstract class Task {
 
     private final Title title;
+    private Description description;
     private boolean isDone;
     private Priority priority;
 
@@ -22,27 +25,22 @@ public abstract class Task {
         assert title != null;
 
         this.title = title;
+
         this.isDone = false;
         this.priority = Priority.MEDIUM;
     }
 
-    /**
-     * Creates a Task object with the given title and priority.
-     *
-     * @param title The title of the Task.
-     * @param priority The priority associated with the Task.
-     */
-    public Task(Title title, Priority priority) {
-        assert title != null;
-        assert priority != null;
-
-        this.title = title;
-        this.isDone = false;
-        this.priority = priority;
-    }
 
     public Title getTitle() {
         return this.title;
+    }
+
+    public Optional<Description> getDescription() {
+        return Optional.ofNullable(this.description);
+    }
+
+    public void setDescription(Description description) {
+        this.description = description;
     }
 
     public void mark() {
@@ -54,6 +52,7 @@ public abstract class Task {
     }
 
     public void setPriority(Priority p) {
+        assert p != null;
         this.priority = p;
     }
 
@@ -82,8 +81,18 @@ public abstract class Task {
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder();
         String mark = this.isDone ? "X" : " ";
-        return "{" + this.priority.toString().toLowerCase() + "}[" + mark + "] " + this.title;
+        sb.append("{")
+                .append(this.priority.toString())
+                .append("}[").append(mark)
+                .append("] ").append(this.title);
+
+        if (getDescription().isPresent()) {
+            sb.append(": ").append(getDescription().get());
+        }
+
+        return sb.toString();
     }
 
     @Override

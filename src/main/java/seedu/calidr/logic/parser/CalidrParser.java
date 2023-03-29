@@ -14,7 +14,10 @@ import seedu.calidr.logic.commands.EditTaskCommand;
 import seedu.calidr.logic.commands.ExitCommand;
 import seedu.calidr.logic.commands.HelpCommand;
 import seedu.calidr.logic.commands.InfoCommand;
+import seedu.calidr.logic.commands.MarkTaskCommand;
 import seedu.calidr.logic.commands.PageCommand;
+import seedu.calidr.logic.commands.ShowCommand;
+import seedu.calidr.logic.commands.UnmarkTaskCommand;
 import seedu.calidr.logic.commands.ViewDateCommand;
 import seedu.calidr.logic.parser.exceptions.ParseException;
 
@@ -54,6 +57,12 @@ public class CalidrParser {
         case EditTaskCommand.COMMAND_WORD:
             return new EditTaskCommandParser().parse(arguments);
 
+        case MarkTaskCommand.COMMAND_WORD:
+            return new MarkTaskCommandParser().parse(arguments);
+
+        case UnmarkTaskCommand.COMMAND_WORD:
+            return new UnmarkTaskCommandParser().parse(arguments);
+
         case DeleteTaskCommand.COMMAND_WORD:
             return new DeleteTaskCommandParser().parse(arguments);
 
@@ -65,6 +74,9 @@ public class CalidrParser {
 
         case PageCommand.COMMAND_WORD:
             return new PageCommandParser().parse(arguments);
+
+        case ShowCommand.COMMAND_WORD:
+            return new ShowCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

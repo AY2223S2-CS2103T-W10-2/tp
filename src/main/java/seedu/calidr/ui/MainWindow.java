@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -16,6 +17,7 @@ import seedu.calidr.logic.Logic;
 import seedu.calidr.logic.commands.CommandResult;
 import seedu.calidr.logic.commands.exceptions.CommandException;
 import seedu.calidr.logic.parser.exceptions.ParseException;
+import seedu.calidr.model.task.Task;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -33,7 +35,11 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private final HelpWindow helpWindow;
     private CalendarPanel calendarPanel;
+
     // private PersonListPanel personListPanel;
+
+    private TaskListPanel taskListPanel;
+
     private ResultDisplay resultDisplay;
 
     @FXML
@@ -41,12 +47,17 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem helpMenuItem;
+
     /*
     @FXML
     private StackPane personListPanelPlaceholder;
     */
+
     @FXML
     private StackPane calendarPanelPlaceholder;
+
+    @FXML
+    private StackPane taskListPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -124,6 +135,9 @@ public class MainWindow extends UiPart<Stage> {
         calendarPanel.updateCalendar(logic.getTaskList());
         calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPlaceholder.getChildren().add(taskListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -144,6 +158,15 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
         }
+    }
+
+    private void launchTaskPopup(Task task) {
+        TaskPopOver taskPopOver = new TaskPopOver(task);
+        Scene scene = new Scene(taskPopOver.getRoot());
+        Stage stage = new Stage();
+        stage.initOwner(primaryStage.getOwner());
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -199,6 +222,8 @@ public class MainWindow extends UiPart<Stage> {
                 calendarPanel.setDate(commandResult.getDate().get());
             } else if (commandResult.getPageType().isPresent()) {
                 calendarPanel.setPage(commandResult.getPageType().get());
+            } else if (commandResult.getPopupTask().isPresent()) {
+                this.launchTaskPopup(commandResult.getPopupTask().get());
             } else {
                 calendarPanel.updateCalendar(logic.getTaskList()); // Entry point for calendar update
             }

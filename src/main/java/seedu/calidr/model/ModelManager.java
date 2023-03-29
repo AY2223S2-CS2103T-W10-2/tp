@@ -188,6 +188,16 @@ public class ModelManager implements Model {
         taskList.setTask(target, editedTask);
     }
 
+    @Override
+    public void markTask(Task task) {
+        taskList.markTask(task);
+    }
+
+    @Override
+    public void unmarkTask(Task task) {
+        taskList.unmarkTask(task);
+    }
+
     //=========== Filtered Task List Accessors =============================================================
 
     /**

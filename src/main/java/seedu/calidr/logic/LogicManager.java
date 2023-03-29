@@ -15,6 +15,7 @@ import seedu.calidr.model.Model;
 import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.ReadOnlyTaskList;
 import seedu.calidr.model.person.Person;
+import seedu.calidr.model.task.Task;
 import seedu.calidr.storage.Storage;
 
 /**
@@ -90,5 +91,10 @@ public class LogicManager implements Logic {
     @Override
     public ReadOnlyTaskList getTaskList() {
         return model.getTaskList();
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+        return model.getFilteredTaskList();
     }
 }

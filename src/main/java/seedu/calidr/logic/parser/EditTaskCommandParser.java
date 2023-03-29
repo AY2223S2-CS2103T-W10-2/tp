@@ -3,7 +3,9 @@ package seedu.calidr.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.calidr.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_BY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_FROM;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TO;
 
@@ -25,8 +27,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     public EditTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TITLE,
-                        PREFIX_BY, PREFIX_FROM, PREFIX_TO);
+                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION,
+                        PREFIX_BY, PREFIX_FROM, PREFIX_TO, PREFIX_PRIORITY);
 
         Index index;
 
@@ -40,6 +42,10 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         if (argMultimap.getValue(PREFIX_TITLE).isPresent()) {
             editTaskDescriptor.setTitle(ParserUtil.parseTitle(argMultimap.getValue(PREFIX_TITLE).get()));
         }
+        if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
+            editTaskDescriptor.setDescription(ParserUtil.parseDescription(
+                    argMultimap.getValue(PREFIX_DESCRIPTION).get()));
+        }
         if (argMultimap.getValue(PREFIX_BY).isPresent()) {
             editTaskDescriptor.setBy(ParserUtil.parseTodoDateTime(argMultimap.getValue(PREFIX_BY).get()));
         }
@@ -48,6 +54,10 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         }
         if (argMultimap.getValue(PREFIX_TO).isPresent()) {
             editTaskDescriptor.setTo(ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_TO).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
+            editTaskDescriptor.setPriority(ParserUtil.parsePriority(
+                    argMultimap.getValue(PREFIX_PRIORITY).get()));
         }
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
