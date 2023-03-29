@@ -5,10 +5,12 @@ import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_FROM;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TO;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.calidr.logic.commands.AddEventCommand;
@@ -18,6 +20,7 @@ import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.EventDateTimes;
 import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 
 /**
@@ -33,7 +36,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_LOCATION,
-                        PREFIX_FROM, PREFIX_TO, PREFIX_PRIORITY);
+                        PREFIX_FROM, PREFIX_TO, PREFIX_PRIORITY, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_FROM, PREFIX_TO)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -44,6 +47,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         String fromDateTimeString = argMultimap.getValue(PREFIX_FROM).get();
         String toDateTimeString = argMultimap.getValue(PREFIX_TO).get();
         EventDateTimes eventDateTimes = ParserUtil.parseEventDateTimes(fromDateTimeString, toDateTimeString);
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Event event = new Event(title, eventDateTimes);
 
@@ -63,6 +67,8 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             priority = ParserUtil.parsePriority(priorityValue.get());
         }
         event.setPriority(priority);
+
+        event.setTags(tagList);
 
         return new AddEventCommand(event);
     }

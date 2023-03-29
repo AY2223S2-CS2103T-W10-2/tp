@@ -149,7 +149,7 @@ fields.
 The newly created object replaces the task to be edited in the `TaskList`. Finally, an output is displayed with the
 status of the edit operation and the updated task details.
 
-<!-- 
+<!--
 To provide an example of how this feature works, consider the following usage scenario. -->
 
 #### Design considerations:

@@ -27,5 +27,5 @@ We have also provided user and developer guides to help you get started:
 
 
 
-## Acknowledgements:  
+## Acknowledgements:
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).

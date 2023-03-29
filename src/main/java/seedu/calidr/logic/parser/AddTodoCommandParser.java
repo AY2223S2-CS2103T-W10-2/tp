@@ -5,9 +5,11 @@ import static seedu.calidr.logic.parser.CliSyntax.PREFIX_BY;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.calidr.logic.commands.AddTodoCommand;
@@ -16,6 +18,7 @@ import seedu.calidr.model.task.ToDo;
 import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 import seedu.calidr.model.task.params.TodoDateTime;
 
@@ -31,7 +34,9 @@ public class AddTodoCommandParser implements Parser<AddTodoCommand> {
      */
     public AddTodoCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_LOCATION, PREFIX_BY, PREFIX_PRIORITY);
+                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_LOCATION,
+                        PREFIX_BY, PREFIX_PRIORITY, PREFIX_TAG);
+
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_BY)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -40,6 +45,7 @@ public class AddTodoCommandParser implements Parser<AddTodoCommand> {
 
         Title title = ParserUtil.parseTitle(argMultimap.getValue(PREFIX_TITLE).get());
         TodoDateTime byDateTime = ParserUtil.parseTodoDateTime(argMultimap.getValue(PREFIX_BY).get());
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         ToDo todo = new ToDo(title, byDateTime);
 
@@ -59,6 +65,8 @@ public class AddTodoCommandParser implements Parser<AddTodoCommand> {
             priority = ParserUtil.parsePriority(priorityValue.get());
         }
         todo.setPriority(priority);
+
+        todo.setTags(tagList);
 
         return new AddTodoCommand(todo);
     }

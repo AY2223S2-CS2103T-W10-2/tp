@@ -18,7 +18,7 @@ import seedu.calidr.model.person.Address;
 import seedu.calidr.model.person.Email;
 import seedu.calidr.model.person.Name;
 import seedu.calidr.model.person.Phone;
-import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.params.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";

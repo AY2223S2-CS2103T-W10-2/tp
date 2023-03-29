@@ -1,11 +1,14 @@
 package seedu.calidr.model.task;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
-import net.fortuna.ical4j.filter.FilterExpression;
 import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 
 /**
@@ -18,6 +21,7 @@ public abstract class Task {
     private Location location;
     private boolean isDone;
     private Priority priority;
+    private Set<Tag> tags = new HashSet<>();
 
     /**
      * Creates a Task object with the given title and MEDIUM priority.
@@ -28,7 +32,6 @@ public abstract class Task {
         assert title != null;
 
         this.title = title;
-
         this.isDone = false;
         this.priority = Priority.MEDIUM;
     }
@@ -41,17 +44,22 @@ public abstract class Task {
     public Optional<Description> getDescription() {
         return Optional.ofNullable(this.description);
     }
-
-    public Optional<Location> getLocation() {
-        return Optional.ofNullable(this.location);
-    }
-
     public void setDescription(Description description) {
         this.description = description;
     }
 
+    public Optional<Location> getLocation() {
+        return Optional.ofNullable(this.location);
+    }
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
+    public void setTags(Set<Tag> tagList) {
+        this.tags = tagList;
     }
 
     public void mark() {
@@ -105,6 +113,12 @@ public abstract class Task {
 
         if (getLocation().isPresent()) {
             sb.append(" @ ").append(getLocation().get());
+        }
+
+        Set<Tag> tags = getTags();
+        if (!tags.isEmpty()) {
+            sb.append("; Tags: ");
+            tags.forEach(sb::append);
         }
 
         return sb.toString();

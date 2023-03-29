@@ -4,6 +4,8 @@ import static seedu.calidr.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.calidr.model.task.params.Tag;
+
 public class TagTest {
 
     @Test

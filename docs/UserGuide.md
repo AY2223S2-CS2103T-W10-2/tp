@@ -149,6 +149,17 @@ Please refer to the terminology [specified above](#data-terminology) if you are 
 
 Searches for tasks with matching keywords in their fields. Filtered tasks are displayed in a list to the side.
 
+A few points to take note of:
+- Keyword matching is case-insensitive
+- All tasks whose titles have any of the given keywords will be displayed in the list.
+- The entire keyword must be contained in the title of the task for the task to be displayed.
+
+Format: `search KEYWORD [MORE KEYWORDS]...`
+
+Examples:
+- `search book`
+- `search assignment homework`
+
 <!--- TODO -->
 
 ### Deleting a task: `delete`

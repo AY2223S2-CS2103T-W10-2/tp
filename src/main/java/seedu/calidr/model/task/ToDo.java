@@ -1,5 +1,8 @@
 package seedu.calidr.model.task;
 
+import java.util.Set;
+
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 import seedu.calidr.model.task.params.TodoDateTime;
 
@@ -47,6 +50,12 @@ public class ToDo extends Task {
 
         if (getLocation().isPresent()) {
             sb.append("\n@ ").append(getLocation().get());
+        }
+
+        Set<Tag> tags = getTags();
+        if (!tags.isEmpty()) {
+            sb.append("\nTags: ");
+            tags.forEach(sb::append);
         }
 
         return sb.toString();

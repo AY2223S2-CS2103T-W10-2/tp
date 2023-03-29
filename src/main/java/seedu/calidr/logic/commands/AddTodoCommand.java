@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_BY;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import seedu.calidr.logic.commands.exceptions.CommandException;
@@ -22,12 +23,14 @@ public class AddTodoCommand extends Command {
             + PREFIX_TITLE + " TITLE "
             + PREFIX_BY + " BY DATE-TIME "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_LOCATION + "LOCATION]\n"
+            + "[" + PREFIX_LOCATION + "LOCATION] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_TITLE + " Assignment "
+            + PREFIX_TITLE + "CS2107 CTF "
             + PREFIX_BY + " 05-04-2023 2359 "
             + PREFIX_DESCRIPTION + " Exercise 5 "
-            + PREFIX_LOCATION + " NUS";
+            + PREFIX_LOCATION + " NUS "
+            + PREFIX_TAG + " Assignment";
 
     public static final String MESSAGE_SUCCESS = "New to-do added: %1$s";
     public static final String MESSAGE_DUPLICATE_TODO = "This to-do already exists in the task list.";

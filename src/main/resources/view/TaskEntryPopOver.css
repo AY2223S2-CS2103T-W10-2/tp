@@ -1,0 +1,7 @@
+#tags > .label {
+    -fx-background-color: #00000010;
+    -fx-background-radius: 5;
+    -fx-padding: 2;
+    -fx-font-style: italic;
+    -fx-font-size: 10;
+}

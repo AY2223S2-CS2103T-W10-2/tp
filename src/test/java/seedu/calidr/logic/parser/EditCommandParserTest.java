@@ -40,7 +40,7 @@ import seedu.calidr.model.person.Address;
 import seedu.calidr.model.person.Email;
 import seedu.calidr.model.person.Name;
 import seedu.calidr.model.person.Phone;
-import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {

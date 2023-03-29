@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import seedu.calidr.model.ReadOnlyTaskList;
-import seedu.calidr.model.tag.Tag;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.Event;
 import seedu.calidr.model.task.Task;
 import seedu.calidr.model.task.ToDo;

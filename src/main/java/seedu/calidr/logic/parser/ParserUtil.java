@@ -17,11 +17,11 @@ import seedu.calidr.commons.core.index.Index;
 import seedu.calidr.commons.util.StringUtil;
 import seedu.calidr.logic.parser.exceptions.ParseException;
 import seedu.calidr.model.PageType;
-import seedu.calidr.model.tag.Tag;
 import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.EventDateTimes;
 import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 import seedu.calidr.model.task.params.TodoDateTime;
 
@@ -68,18 +68,6 @@ public class ParserUtil {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
         return new Tag(trimmedTag);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
-        }
-        return tagSet;
     }
 
     //===============================For Calidr====================================================
@@ -263,5 +251,19 @@ public class ParserUtil {
         }
 
         return priority;
+    }
+
+    //@@author vaidyanaath-reused
+    // Reused from AB3 code.
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
     }
 }

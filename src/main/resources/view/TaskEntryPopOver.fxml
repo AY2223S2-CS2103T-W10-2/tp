@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
-      prefWidth="400.0"
-      spacing="10.0"
-      xmlns="http://javafx.com/javafx/19"
->
+<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" spacing="10.0"
+      xmlns="http://javafx.com/javafx/19">
+   <stylesheets>
+      <URL value="@TaskEntryPopOver.css"/>
+   </stylesheets>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
    </padding>
@@ -24,26 +24,17 @@
             </font>
          </Label>
          <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
-            <Label fx:id="doneTick"
-                   alignment="CENTER_RIGHT"
-                   maxHeight="-Infinity"
-                   maxWidth="-Infinity"
-                   minHeight="-Infinity"
-                   minWidth="-Infinity"
-                   HBox.hgrow="ALWAYS"
-            >
+            <Label fx:id="doneTick" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity"
+                   minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="20.0"/>
                </font>
             </Label>
          </HBox>
       </HBox>
-      <Label fx:id="description"
-             maxHeight="1.7976931348623157E308"
-             maxWidth="1.7976931348623157E308"
-             wrapText="true"
-             VBox.vgrow="ALWAYS"
-      />
+      <FlowPane fx:id="tags" hgap="5.0" vgap="5.0"/>
+      <Label fx:id="description" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true"
+             VBox.vgrow="ALWAYS"/>
       <VBox spacing="10.0" style="-fx-border-color: #aaa; -fx-border-style: solid none none none;">
          <padding>
             <Insets top="15.0"/>
@@ -68,6 +59,7 @@
             </Label>
          </HBox>
          <Label fx:id="priority"/>
+         <Label fx:id="taskLocation"/>
       </VBox>
    </VBox>
    <HBox alignment="CENTER" maxHeight="-Infinity" VBox.vgrow="NEVER">

@@ -7,13 +7,20 @@ import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_FROM;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TO;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.calidr.commons.core.index.Index;
 import seedu.calidr.logic.commands.EditTaskCommand;
 import seedu.calidr.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.calidr.logic.parser.exceptions.ParseException;
+import seedu.calidr.model.task.params.Tag;
 
 /**
  * Parses input arguments and creates a new EditTaskCommand object
@@ -28,7 +35,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_LOCATION,
-                        PREFIX_BY, PREFIX_FROM, PREFIX_TO, PREFIX_PRIORITY);
+                        PREFIX_BY, PREFIX_FROM, PREFIX_TO, PREFIX_PRIORITY, PREFIX_TAG);
 
         Index index;
 
@@ -63,11 +70,32 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             editTaskDescriptor.setPriority(ParserUtil.parsePriority(
                     argMultimap.getValue(PREFIX_PRIORITY).get()));
         }
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditTaskCommand(index, editTaskDescriptor);
+    }
+
+    //@@author vaidyanaath-reused
+    // Reused from AB3 code.
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
+     * @author MightyCupcakes
+     * @author Tan
+     */
+    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 }

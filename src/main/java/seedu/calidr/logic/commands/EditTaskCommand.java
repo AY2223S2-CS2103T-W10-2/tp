@@ -5,15 +5,18 @@ import static seedu.calidr.logic.parser.CliSyntax.PREFIX_BY;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_FROM;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.calidr.logic.parser.CliSyntax.PREFIX_TO;
 import static seedu.calidr.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import net.fortuna.ical4j.filter.FilterExpression;
 import seedu.calidr.commons.core.Messages;
 import seedu.calidr.commons.core.index.Index;
 import seedu.calidr.commons.util.CollectionUtil;
@@ -26,6 +29,7 @@ import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.EventDateTimes;
 import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.Priority;
+import seedu.calidr.model.task.params.Tag;
 import seedu.calidr.model.task.params.Title;
 import seedu.calidr.model.task.params.TodoDateTime;
 
@@ -33,6 +37,7 @@ import seedu.calidr.model.task.params.TodoDateTime;
  * Edits the details of an existing task in the task list.
  */
 public class EditTaskCommand extends Command {
+
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
@@ -44,12 +49,14 @@ public class EditTaskCommand extends Command {
             + "[" + PREFIX_TO + "TO] (only for events)\n"
             + "[" + PREFIX_BY + "BY] (only for todos) "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_LOCATION + "LOCATION]\n"
+            + "[" + PREFIX_LOCATION + "LOCATION] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_TITLE + "Science Homework "
-            + PREFIX_BY + "03-11-2024 2359 "
-            + PREFIX_DESCRIPTION + "Finish Lab Report "
-            + PREFIX_LOCATION + "S17";
+            + PREFIX_TITLE + " Science Homework "
+            + PREFIX_BY + " 03-11-2024 2359 "
+            + PREFIX_DESCRIPTION + " Finish Lab Report "
+            + PREFIX_LOCATION + " S17 "
+            + PREFIX_TAG + " lab";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -105,17 +112,21 @@ public class EditTaskCommand extends Command {
             ToDo todoToEdit = (ToDo) taskToEdit;
 
             Title updatedTitle = editTaskDescriptor.getTitle().orElse(todoToEdit.getTitle());
+
             Description oldDescription = todoToEdit.getDescription().orElse(null);
             Description updatedDescription = editTaskDescriptor.getDescription().orElse(oldDescription);
             Location oldLocation = todoToEdit.getLocation().orElse(null);
             Location updatedLocation = editTaskDescriptor.getLocation().orElse(oldLocation);
+
             Priority updatedPriority = editTaskDescriptor.getPriority().orElse(todoToEdit.getPriority());
             TodoDateTime updatedBy = editTaskDescriptor.getByDateTime().orElse(todoToEdit.getBy());
+            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(todoToEdit.getTags());;
 
             ToDo updatedTodo = new ToDo(updatedTitle, updatedBy);
             updatedTodo.setDescription(updatedDescription);
             updatedTodo.setLocation(updatedLocation);
             updatedTodo.setPriority(updatedPriority);
+            updatedTodo.setTags(updatedTags);
 
             return updatedTodo;
 
@@ -128,6 +139,7 @@ public class EditTaskCommand extends Command {
             Location oldLocation = eventToEdit.getLocation().orElse(null);
             Location updatedLocation = editTaskDescriptor.getLocation().orElse(oldLocation);
             Priority updatedPriority = editTaskDescriptor.getPriority().orElse(eventToEdit.getPriority());
+            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(eventToEdit.getTags());
 
             LocalDateTime updatedFromDateTime = editTaskDescriptor.getFromDateTime()
                     .orElse(eventToEdit.getEventDateTimes().from);
@@ -143,6 +155,7 @@ public class EditTaskCommand extends Command {
             updatedEvent.setDescription(updatedDescription);
             updatedEvent.setLocation(updatedLocation);
             updatedEvent.setPriority(updatedPriority);
+            updatedEvent.setTags(updatedTags);
 
             return updatedEvent;
 
@@ -165,6 +178,7 @@ public class EditTaskCommand extends Command {
         private LocalDateTime fromDateTime;
         private LocalDateTime toDateTime;
         private Priority priority;
+        private Set<Tag> tags;
 
         public EditTaskDescriptor() {}
 
@@ -179,6 +193,7 @@ public class EditTaskCommand extends Command {
             setFromDateTime(toCopy.fromDateTime);
             setToDateTime(toCopy.toDateTime);
             setPriority(toCopy.priority);
+            setTags(toCopy.tags);
         }
 
         /**
@@ -186,57 +201,63 @@ public class EditTaskCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(title, description, location, byDateTime,
-                    fromDateTime, toDateTime, priority);
+                    fromDateTime, toDateTime, priority, tags);
         }
 
-        public void setTitle(Title title) {
-            this.title = title;
-        }
         public Optional<Title> getTitle() {
             return Optional.ofNullable(title);
         }
-
-        public void setDescription(Description description) {
-            this.description = description;
+        public void setTitle(Title title) {
+            this.title = title;
         }
+
         public Optional<Description> getDescription() {
             return Optional.ofNullable(description);
+        }
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
         public Optional<Location> getLocation() {
             return Optional.ofNullable(location);
-
         }
         public void setLocation(Location location) {
             this.location = location;
         }
 
-        public void setByDateTime(TodoDateTime todoDateTime) {
-            this.byDateTime = todoDateTime;
-        }
         public Optional<TodoDateTime> getByDateTime() {
             return Optional.ofNullable(byDateTime);
         }
-
-        public void setFromDateTime(LocalDateTime localDateTime) {
-            this.fromDateTime = localDateTime;
+        public void setByDateTime(TodoDateTime todoDateTime) {
+            this.byDateTime = todoDateTime;
         }
+
         public Optional<LocalDateTime> getFromDateTime() {
             return Optional.ofNullable(fromDateTime);
         }
-
-        public void setToDateTime(LocalDateTime localDateTime) {
-            this.toDateTime = localDateTime;
+        public void setFromDateTime(LocalDateTime localDateTime) {
+            this.fromDateTime = localDateTime;
         }
+
         public Optional<LocalDateTime> getToDateTime() {
             return Optional.ofNullable(toDateTime);
         }
+        public void setToDateTime(LocalDateTime localDateTime) {
+            this.toDateTime = localDateTime;
+        }
 
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
         public void setPriority(Priority priority) {
             this.priority = priority;
         }
-        public Optional<Priority> getPriority() {
-            return Optional.ofNullable(priority);
+
+        public Optional<Set<Tag>> getTags() {
+            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+        public void setTags(Set<Tag> tags) {
+            this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
         @Override
@@ -259,7 +280,8 @@ public class EditTaskCommand extends Command {
                     && getByDateTime().equals(e.getByDateTime())
                     && getFromDateTime().equals(e.getFromDateTime())
                     && getToDateTime().equals(e.getToDateTime())
-                    && getPriority().equals(e.getPriority());
+                    && getPriority().equals(e.getPriority())
+                    && getTags().equals(e.getTags());
         }
     }
 }
