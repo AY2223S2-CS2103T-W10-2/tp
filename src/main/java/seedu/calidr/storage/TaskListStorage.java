@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.calidr.commons.exceptions.DataConversionException;
-import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.ReadOnlyTaskList;
 
 /**
@@ -32,7 +31,7 @@ public interface TaskListStorage {
     Optional<ReadOnlyTaskList> readTaskList(Path filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyAddressBook} to the storage.
+     * Saves the given {@link ReadOnlyTaskList} to the storage.
      * @param taskList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */

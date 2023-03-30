@@ -46,7 +46,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Calidr ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        TaskListStorage taskListStorage = new IcsCalendarStorage(userPrefs.getAddressBookFilePath());
+        TaskListStorage taskListStorage = new IcsCalendarStorage(userPrefs.getCalendarFilePath());
         storageManager = new StorageManager(taskListStorage, userPrefsStorage);
 
         initLogging(config);
@@ -67,9 +67,9 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s task list and {@code userPrefs}. <br>
+     * The data from the sample task list will be used instead if {@code storage}'s task list is not found,
+     * or an empty task list will be used instead if errors occur when reading {@code storage}'s task list.
      */
     private Model initModelManager(StorageManager storageManager, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlyTaskList> taskListOptional;
@@ -77,16 +77,16 @@ public class MainApp extends Application {
         try {
             taskListOptional = storageManager.readTaskList();
             if (taskListOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                logger.info("Data file not found. Will be starting with a sample Calendar");
             }
             // TODO
-            // initialData = taskListOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            // initialData = taskListOptional.orElseGet(SampleDataUtil::getSampleTaskList);
             initialData = taskListOptional.orElseGet(TaskList::new);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty TaskList");
+            logger.warning("Data file not in the correct format. Will be starting with an empty Calendar");
             initialData = new TaskList();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty TaskList");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Calendar");
             initialData = new TaskList();
         }
 
@@ -151,7 +151,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Calendar");
             initializedPrefs = new UserPrefs();
         }
 
@@ -167,13 +167,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Calidr " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Calidr ] =============================");
         try {
             storageManager.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

@@ -25,9 +25,9 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' calendar file path.
      */
-    Path getAddressBookFilePath();
+    Path getCalendarFilePath();
 
     /**
      * Returns the user prefs' GUI settings.

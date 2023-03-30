@@ -26,7 +26,6 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    // private final AddressBookParser addressBookParser;
 
     private final CalidrParser calidrParser;
 
@@ -36,7 +35,6 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        // addressBookParser = new AddressBookParser();
         calidrParser = new CalidrParser();
     }
 
@@ -58,8 +56,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
+    public Path getCalendarFilePath() {
+        return model.getCalendarFilePath();
     }
 
     @Override

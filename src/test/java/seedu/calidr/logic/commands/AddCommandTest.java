@@ -2,7 +2,6 @@ package seedu.calidr.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.calidr.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
@@ -100,12 +99,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public Path getAddressBookFilePath() {
+        public Path getCalendarFilePath() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
+        public void setCalendarFilePath(Path calendarFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 

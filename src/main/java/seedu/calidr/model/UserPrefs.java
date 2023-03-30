@@ -2,6 +2,8 @@ package seedu.calidr.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import seedu.calidr.commons.core.GuiSettings;
@@ -12,6 +14,8 @@ import seedu.calidr.commons.core.GuiSettings;
 public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
+
+    private Path calendarFilePath = Paths.get("data" , "calendar.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -67,4 +71,12 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         return "Gui Settings : " + guiSettings;
     }
 
+    public Path getCalendarFilePath() {
+        return calendarFilePath;
+    }
+
+    public void setCalendarFilePath(Path calendarFilePath) {
+        requireNonNull(calendarFilePath);
+        this.calendarFilePath = calendarFilePath;
+    }
 }

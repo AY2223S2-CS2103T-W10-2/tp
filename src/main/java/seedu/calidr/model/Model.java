@@ -1,5 +1,6 @@
 package seedu.calidr.model;
 
+import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -37,14 +38,14 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' calendar file path.
      */
-    Path getAddressBookFilePath();
+    Path getCalendarFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' calendar file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setCalendarFilePath(Path calendarFilePath);
 
     //=========== TaskList ================================================================================
 

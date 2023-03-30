@@ -18,7 +18,7 @@ import seedu.calidr.model.task.params.TodoDateTime;
 import seedu.calidr.model.tasklist.TaskList;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code Calidr} with sample data.
  */
 public class SampleDataUtil {
 

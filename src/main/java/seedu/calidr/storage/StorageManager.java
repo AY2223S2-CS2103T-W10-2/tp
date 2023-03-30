@@ -17,11 +17,11 @@ import seedu.calidr.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private TaskListStorage taskListStorage;
-    private UserPrefsStorage userPrefsStorage;
+    private final TaskListStorage taskListStorage;
+    private final UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
+     * Creates a {@code StorageManager} with the given {@code taskListStorage} and {@code UserPrefStorage}.
      */
     public StorageManager(TaskListStorage taskListStorage, UserPrefsStorage userPrefsStorage) {
         this.taskListStorage = taskListStorage;

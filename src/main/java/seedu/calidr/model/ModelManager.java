@@ -15,7 +15,7 @@ import seedu.calidr.model.task.Task;
 import seedu.calidr.model.tasklist.TaskList;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the calendar data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -66,14 +66,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getCalendarFilePath() {
+        return userPrefs.getCalendarFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+    public void setCalendarFilePath(Path calendarFilePath) {
+        requireNonNull(calendarFilePath);
+        userPrefs.setCalendarFilePath(calendarFilePath);
     }
 
     //=========== TaskList ================================================================================
