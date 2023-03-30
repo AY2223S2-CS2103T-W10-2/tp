@@ -1,5 +1,7 @@
 package seedu.calidr.logic;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -24,6 +26,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
+    // private final AddressBookParser addressBookParser;
 
     private final CalidrParser calidrParser;
 
@@ -33,6 +36,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
+        // addressBookParser = new AddressBookParser();
         calidrParser = new CalidrParser();
     }
 
@@ -44,16 +48,18 @@ public class LogicManager implements Logic {
         Command command = calidrParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
-        // TODO Storage integration
-        /*
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveTaskList(model.getTaskList());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
-         */
 
         return commandResult;
+    }
+
+    @Override
+    public Path getAddressBookFilePath() {
+        return model.getAddressBookFilePath();
     }
 
     @Override

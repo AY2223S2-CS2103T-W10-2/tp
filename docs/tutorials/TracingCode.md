@@ -127,7 +127,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
         try {
             //We can deduce that the previous line of code modifies model in some way
             // since it's being stored here.
-            storage.saveAddressBook(model.getAddressBook());
+            AB3StorageComposite.saveAddressBook(model.getAddressBook());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
@@ -217,10 +217,10 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
 
 1. Similar to before, you can step over/into statements in the `LogicManager#execute()` method to examine how the control is transferred to the `Storage` component and what happens inside that component.
 
-   <div markdown="span" class="alert alert-primary">:bulb: **Intellij Tip:** When trying to step into a statement such as `storage.saveAddressBook(model.getAddressBook())` which contains multiple method calls, Intellij will let you choose (by clicking) which one you want to step into.
+   <div markdown="span" class="alert alert-primary">:bulb: **Intellij Tip:** When trying to step into a statement such as `AB3StorageComposite.saveAddressBook(model.getAddressBook())` which contains multiple method calls, Intellij will let you choose (by clicking) which one you want to step into.
    </div>
 
-1.  As you step through the code inside the `Storage` component, you will eventually arrive at the `JsonAddressBook#saveAddressBook()` method which calls the `JsonSerializableAddressBook` constructor, to create an object that can be _serialized_ (i.e., stored in storage medium) in JSON format. That constructor is given below (with added line breaks for easier readability):
+1.  As you step through the code inside the `Storage` component, you will eventually arrive at the `JsonAddressBook#saveAddressBook()` method which calls the `JsonSerializableAddressBook` constructor, to create an object that can be _serialized_ (i.e., stored in AB3StorageComposite medium) in JSON format. That constructor is given below (with added line breaks for easier readability):
 
     **`JsonSerializableAddressBook` constructor:**
     ``` java
@@ -244,7 +244,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
 
 1. While you are stepping through the classes in the `Storage` component, here is the component's class diagram to help you understand how those classes fit into the structure of the component.<br>
    <img src="../images/StorageClassDiagram.png" width="550" />
-   * :bulb: This may be a good time to read through the [`Storage` component section of the DG](../DeveloperGuide.html#storage-component)
+   * :bulb: This may be a good time to read through the [`Storage` component section of the DG](../DeveloperGuide.html#AB3StorageComposite-component)
 
 1. We can continue to step through until you reach the end of the `LogicManager#execute()` method and return to the `MainWindow#executeCommand()` method (the place where we put the original breakpoint).
 

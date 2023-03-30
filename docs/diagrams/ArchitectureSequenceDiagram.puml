@@ -5,7 +5,7 @@ Actor User as user USER_COLOR
 Participant ":UI" as ui UI_COLOR
 Participant ":Logic" as logic LOGIC_COLOR
 Participant ":Model" as model MODEL_COLOR
-Participant ":Storage" as storage STORAGE_COLOR
+Participant ":Storage" as AB3StorageComposite STORAGE_COLOR
 
 user -[USER_COLOR]> ui : "delete 1"
 activate ui UI_COLOR
@@ -19,16 +19,16 @@ activate model MODEL_COLOR
 model -[MODEL_COLOR]-> logic
 deactivate model
 
-logic -[LOGIC_COLOR]> storage : saveAddressBook(addressBook)
-activate storage STORAGE_COLOR
+logic -[LOGIC_COLOR]> AB3StorageComposite : saveAddressBook(addressBook)
+activate AB3StorageComposite STORAGE_COLOR
 
-storage -[STORAGE_COLOR]> storage : Save to file
-activate storage STORAGE_COLOR_T1
-storage --[STORAGE_COLOR]> storage
-deactivate storage
+AB3StorageComposite -[STORAGE_COLOR]> AB3StorageComposite : Save to file
+activate AB3StorageComposite STORAGE_COLOR_T1
+AB3StorageComposite --[STORAGE_COLOR]> AB3StorageComposite
+deactivate AB3StorageComposite
 
-storage --[STORAGE_COLOR]> logic
-deactivate storage
+AB3StorageComposite --[STORAGE_COLOR]> logic
+deactivate AB3StorageComposite
 
 logic --[LOGIC_COLOR]> ui
 deactivate logic

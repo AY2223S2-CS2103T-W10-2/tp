@@ -230,8 +230,8 @@ Example: `show 2`
 
 ### Saving your data
 
-Calidr calendar information is saved in the hard disk automatically after any modification command. The data is stored
-as an [ics file](https://www.ical4j.org/).
+Calidr user preferences and calendar information is saved in the hard disk automatically after any modification command. The data is stored
+as an [ics-formatted json file](https://www.ical4j.org/).
 
 ### Editing the data file
 

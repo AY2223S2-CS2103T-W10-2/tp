@@ -3,6 +3,7 @@ package seedu.calidr.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.calidr.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -24,12 +25,12 @@ public class ModelManager implements Model {
     private final FilteredList<Task> filteredTasks;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given taskList and userPrefs.
      */
     public ModelManager(ReadOnlyTaskList taskList, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(taskList, userPrefs);
 
-        logger.fine("Initializing with task list: " + taskList + " and user prefs " + userPrefs);
+        logger.fine("Initializing with taskList: " + taskList + " and user prefs " + userPrefs);
 
         this.taskList = new TaskList(taskList);
         this.userPrefs = new UserPrefs(userPrefs);
@@ -65,22 +66,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
+    public Path getAddressBookFilePath() {
+        return userPrefs.getAddressBookFilePath();
+    }
 
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return taskList.equals(other.taskList)
-                && userPrefs.equals(other.userPrefs)
-                && filteredTasks.equals(other.filteredTasks);
+    @Override
+    public void setAddressBookFilePath(Path addressBookFilePath) {
+        requireNonNull(addressBookFilePath);
+        userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
     //=========== TaskList ================================================================================

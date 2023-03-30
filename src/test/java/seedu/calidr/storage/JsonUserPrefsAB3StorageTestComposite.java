@@ -16,7 +16,7 @@ import seedu.calidr.commons.core.GuiSettings;
 import seedu.calidr.commons.exceptions.DataConversionException;
 import seedu.calidr.model.UserPrefs;
 
-public class JsonUserPrefsStorageTest {
+public class JsonUserPrefsAB3StorageTestComposite {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonUserPrefsStorageTest");
 
@@ -73,7 +73,7 @@ public class JsonUserPrefsStorageTest {
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
-        userPrefs.setAddressBookFilePath(Paths.get("addressbook.json"));
+        userPrefs.setAddressBookFilePath(Paths.get("addressbook.ics"));
         return userPrefs;
     }
 

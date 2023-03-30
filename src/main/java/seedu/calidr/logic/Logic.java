@@ -1,5 +1,7 @@
 package seedu.calidr.logic;
 
+import java.nio.file.Path;
+
 import javafx.collections.ObservableList;
 import seedu.calidr.commons.core.GuiSettings;
 import seedu.calidr.logic.commands.CommandResult;
@@ -21,6 +23,11 @@ public interface Logic {
      * @throws ParseException   If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    /**
+     * Returns the user prefs' address book file path.
+     */
+    Path getAddressBookFilePath();
 
     /**
      * Returns the user prefs' GUI settings.

@@ -19,9 +19,7 @@ import seedu.calidr.model.Model;
 import seedu.calidr.model.ModelManager;
 import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.UserPrefs;
-import seedu.calidr.storage.JsonAddressBookStorage;
-import seedu.calidr.storage.JsonUserPrefsStorage;
-import seedu.calidr.storage.StorageManager;
+import seedu.calidr.storage.*;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy exception");
@@ -34,10 +32,10 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        TaskListStorage taskListStorage =
+                new IcsCalendarStorage(temporaryFolder.resolve("addressBook.ics"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        Storage storage = new StorageManager(taskListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -98,7 +96,7 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
                                       String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getTaskList(), new UserPrefs());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 

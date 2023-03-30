@@ -19,7 +19,7 @@ import seedu.calidr.commons.exceptions.DataConversionException;
 import seedu.calidr.model.AddressBook;
 import seedu.calidr.model.ReadOnlyAddressBook;
 
-public class JsonAddressBookStorageTest {
+public class JsonAddressBookAB3StorageTestComposite {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
 
     @TempDir

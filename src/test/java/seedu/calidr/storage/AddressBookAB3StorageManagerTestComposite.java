@@ -15,18 +15,18 @@ import seedu.calidr.model.AddressBook;
 import seedu.calidr.model.ReadOnlyAddressBook;
 import seedu.calidr.model.UserPrefs;
 
-public class StorageManagerTest {
+public class AddressBookAB3StorageManagerTestComposite {
 
     @TempDir
     public Path testFolder;
 
-    private StorageManager storageManager;
+    private AddressBookStorageManager addressBookStorageManager;
 
     @BeforeEach
     public void setUp() {
         JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        addressBookStorageManager = new AddressBookStorageManager(addressBookStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -42,8 +42,8 @@ public class StorageManagerTest {
          */
         UserPrefs original = new UserPrefs();
         original.setGuiSettings(new GuiSettings(300, 600, 4, 6));
-        storageManager.saveUserPrefs(original);
-        UserPrefs retrieved = storageManager.readUserPrefs().get();
+        addressBookStorageManager.saveUserPrefs(original);
+        UserPrefs retrieved = addressBookStorageManager.readUserPrefs().get();
         assertEquals(original, retrieved);
     }
 
@@ -55,14 +55,14 @@ public class StorageManagerTest {
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
          */
         AddressBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
+        addressBookStorageManager.saveAddressBook(original);
+        ReadOnlyAddressBook retrieved = addressBookStorageManager.readAddressBook().get();
         assertEquals(original, new AddressBook(retrieved));
     }
 
     @Test
     public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+        assertNotNull(addressBookStorageManager.getAddressBookFilePath());
     }
 
 }

@@ -12,20 +12,19 @@ import seedu.calidr.model.ReadOnlyUserPrefs;
 import seedu.calidr.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of TaskList data in local storage.
  */
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-
-    private final CalendarStorage calendarStorage;
-    private final UserPrefsStorage userPrefsStorage;
+    private TaskListStorage taskListStorage;
+    private UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code CalendarStorage} and {@code UserPrefStorage}.
+     * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(CalendarStorage calendarStorage, UserPrefsStorage userPrefsStorage) {
-        this.calendarStorage = calendarStorage;
+    public StorageManager(TaskListStorage taskListStorage, UserPrefsStorage userPrefsStorage) {
+        this.taskListStorage = taskListStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -46,14 +45,34 @@ public class StorageManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
+
+    // ================ TaskList methods ==============================
+
     @Override
-    public Optional<ReadOnlyTaskList> readTaskList() throws DataConversionException, IOException {
-        return calendarStorage.readTaskList();
+    public Path getTaskListFilePath() {
+        return taskListStorage.getTaskListFilePath();
     }
 
     @Override
-    public void saveTaskList(ReadOnlyTaskList taskList) throws IOException {
-        calendarStorage.saveTaskList(taskList);
+    public Optional<ReadOnlyTaskList> readTaskList() throws DataConversionException, IOException {
+        return taskListStorage.readTaskList();
+    }
+
+    @Override
+    public Optional<ReadOnlyTaskList> readTaskList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return taskListStorage.readTaskList(filePath);
+    }
+
+    @Override
+    public void saveTaskList(ReadOnlyTaskList TaskList) throws IOException {
+        taskListStorage.saveTaskList(TaskList);
+    }
+
+    @Override
+    public void saveTaskList(ReadOnlyTaskList TaskList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        taskListStorage.saveTaskList(TaskList, filePath);
     }
 
 }
