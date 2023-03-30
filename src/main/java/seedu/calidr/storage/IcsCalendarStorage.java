@@ -51,7 +51,7 @@ import seedu.calidr.model.tasklist.TaskList;
 public class IcsCalendarStorage implements TaskListStorage {
     private static final Logger logger = LogsCenter.getLogger(TaskListStorage.class);
 
-    private Path filePath;
+    private final Path filePath;
 
     /**
      * Create a new IcsCalendarStorage instance from a File path

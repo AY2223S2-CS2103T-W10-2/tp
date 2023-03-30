@@ -1,53 +1,22 @@
 package seedu.calidr.logic.parser;
 
 import static seedu.calidr.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.calidr.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.calidr.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.calidr.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.calidr.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.calidr.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.calidr.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.calidr.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.calidr.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.calidr.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.calidr.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.calidr.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.calidr.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.calidr.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
-import static seedu.calidr.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.calidr.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.calidr.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.calidr.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.calidr.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.calidr.testutil.TypicalPersons.AMY;
-import static seedu.calidr.testutil.TypicalPersons.BOB;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.calidr.logic.commands.AddCommand;
-import seedu.calidr.model.person.Address;
-import seedu.calidr.model.person.Email;
-import seedu.calidr.model.person.Name;
-import seedu.calidr.model.person.Person;
-import seedu.calidr.model.person.Phone;
 import seedu.calidr.model.task.params.Tag;
-import seedu.calidr.testutil.PersonBuilder;
+import seedu.calidr.testutil.TaskBuilder;
 
 public class AddCommandParserTest {
-    private AddCommandParser parser = new AddCommandParser();
+    private final AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
+        Person expectedPerson = new TaskBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -70,7 +39,7 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+        Person expectedPersonMultipleTags = new TaskBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + REMARK_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleTags));
@@ -79,7 +48,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Person expectedPerson = new TaskBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY + REMARK_DESC_AMY,
                 new AddCommand(expectedPerson));

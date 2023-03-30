@@ -15,7 +15,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
 
-    private Path calendarFilePath = Paths.get("data" , "calendar.json");
+    private Path calendarFilePath = Paths.get("data" , "calendar.ics");
 
     /**
      * Creates a {@code UserPrefs} with default values.

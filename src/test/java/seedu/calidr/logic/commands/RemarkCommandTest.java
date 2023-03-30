@@ -3,7 +3,6 @@ package seedu.calidr.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.calidr.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.calidr.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.calidr.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.calidr.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.calidr.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.calidr.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -19,18 +18,18 @@ import seedu.calidr.model.ModelManager;
 import seedu.calidr.model.UserPrefs;
 import seedu.calidr.model.person.Person;
 import seedu.calidr.model.person.Remark;
-import seedu.calidr.testutil.PersonBuilder;
+import seedu.calidr.testutil.TaskBuilder;
 
 class RemarkCommandTest {
 
     private static final String REMARK_STUB = "Some remark";
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_addRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRemark(REMARK_STUB).build();
+        Person editedPerson = new TaskBuilder(firstPerson).withRemark(REMARK_STUB).build();
 
         RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(editedPerson.getRemark().value));
 
@@ -45,7 +44,7 @@ class RemarkCommandTest {
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRemark("").build();
+        Person editedPerson = new TaskBuilder(firstPerson).withRemark("").build();
 
         RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_PERSON,
                 new Remark(editedPerson.getRemark().toString()));
@@ -63,7 +62,7 @@ class RemarkCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+        Person editedPerson = new TaskBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withRemark(REMARK_STUB).build();
 
         RemarkCommand remarkCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(editedPerson.getRemark().value));

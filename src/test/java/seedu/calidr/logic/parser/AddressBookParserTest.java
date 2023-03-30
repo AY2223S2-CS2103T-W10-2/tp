@@ -1,6 +1,5 @@
 package seedu.calidr.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.calidr.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.calidr.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -26,8 +25,8 @@ import seedu.calidr.logic.parser.exceptions.ParseException;
 import seedu.calidr.model.person.NameContainsKeywordsPredicate;
 import seedu.calidr.model.person.Person;
 import seedu.calidr.testutil.EditPersonDescriptorBuilder;
-import seedu.calidr.testutil.PersonBuilder;
 import seedu.calidr.testutil.PersonUtil;
+import seedu.calidr.testutil.TaskBuilder;
 
 public class AddressBookParserTest {
 
@@ -35,7 +34,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new TaskBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
@@ -55,7 +54,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new TaskBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
