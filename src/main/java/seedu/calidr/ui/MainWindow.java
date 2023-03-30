@@ -36,8 +36,6 @@ public class MainWindow extends UiPart<Stage> {
     private final HelpWindow helpWindow;
     private CalendarPanel calendarPanel;
 
-    // private PersonListPanel personListPanel;
-
     private TaskListPanel taskListPanel;
 
     private ResultDisplay resultDisplay;
@@ -119,11 +117,6 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        /*
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        */
-
         calendarPanel = new CalendarPanel();
         calendarPanel.updateCalendar(logic.getTaskList());
         calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());

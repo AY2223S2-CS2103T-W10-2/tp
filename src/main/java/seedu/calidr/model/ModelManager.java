@@ -64,9 +64,6 @@ public class ModelManager implements Model {
         userPrefs.setGuiSettings(guiSettings);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

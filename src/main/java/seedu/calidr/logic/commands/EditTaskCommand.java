@@ -100,8 +100,8 @@ public class EditTaskCommand extends Command {
 
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
      */
     private static Task createEditedTask(Task taskToEdit, EditTaskDescriptor editTaskDescriptor)
             throws CommandException {
@@ -120,7 +120,7 @@ public class EditTaskCommand extends Command {
 
             Priority updatedPriority = editTaskDescriptor.getPriority().orElse(todoToEdit.getPriority());
             TodoDateTime updatedBy = editTaskDescriptor.getByDateTime().orElse(todoToEdit.getBy());
-            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(todoToEdit.getTags());;
+            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(todoToEdit.getTags());
 
             ToDo updatedTodo = new ToDo(updatedTitle, updatedBy);
             updatedTodo.setDescription(updatedDescription);

@@ -11,7 +11,9 @@ import seedu.calidr.commons.util.StringUtil;
 import seedu.calidr.model.task.Event;
 import seedu.calidr.model.task.Task;
 import seedu.calidr.model.task.ToDo;
+import seedu.calidr.model.task.params.Description;
 import seedu.calidr.model.task.params.EventDateTimes;
+import seedu.calidr.model.task.params.Location;
 import seedu.calidr.model.task.params.TodoDateTime;
 
 /**
@@ -61,19 +63,16 @@ public class TaskPopOver extends UiPart<Region> {
         super(FXML);
         title.setText(task.getTitle().value);
 
-        if (task.getDescription().isPresent()) {
-            description.setText(task.getDescription().get().value);
-        } else {
-            description.setManaged(false);
-            description.setVisible(false);
-        }
+        task.getDescription().ifPresentOrElse(
+            desc -> description.setText(desc.value), () -> {
+                description.setVisible(false);
+                description.setManaged(false);
+            }
+        );
 
-        if (task.getLocation().isPresent()) {
-            taskLocation.setText("@ " + task.getLocation().get().value);
-        } else {
-            taskLocation.setManaged(false);
-            taskLocation.setVisible(false);
-        }
+        setIf(description, task.getDescription(), Description::toString);
+
+        setIf(taskLocation, task.getLocation(), Location::toString);
 
         if (task instanceof Event) {
             EventDateTimes eventDateTimes = ((Event) task).getEventDateTimes();
@@ -88,9 +87,7 @@ public class TaskPopOver extends UiPart<Region> {
             toBy.setText("by");
             toDate.setText(todoDateTime.value.format(TodoDateTime.PRINT_FORMAT));
 
-            if (todo.isDone()) {
-                doneTick.setText("✔");
-            }
+            setIf(doneTick, "✔", todo.isDone());
         }
 
         priority.setText(StringUtil.capitalize(task.getPriority().toString()) + " priority");

@@ -11,7 +11,7 @@ import seedu.calidr.model.task.params.EventDateTimes;
 import seedu.calidr.model.task.params.TodoDateTime;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Task}.
  */
 public class TaskCard extends UiPart<Region> {
 
@@ -45,20 +45,15 @@ public class TaskCard extends UiPart<Region> {
     private Label toDate;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code TaskCard} with the given {@code Task} and index to display.
      */
     public TaskCard(Task task, int displayedIndex) {
         super(FXML);
         this.task = task;
         title.setText(task.getTitle().value);
         index.setText(displayedIndex + ". ");
-        priority.setText(task.getPriority().toString().toUpperCase());
-        if (task.isDone()) {
-            status.setText("DONE");
-        } else {
-            status.setVisible(false);
-            status.setManaged(false);
-        }
+        priority.setText(task.getPriority().toString().toUpperCase() + " priority");
+        setIf(status, "DONE", task.isDone());
         if (task instanceof Event) {
             EventDateTimes eventDateTimes = ((Event) task).getEventDateTimes();
             fromDate.setText("from " + eventDateTimes.from.format(EventDateTimes.PRINT_FORMAT));
@@ -69,11 +64,6 @@ public class TaskCard extends UiPart<Region> {
             fromDate.setManaged(false);
             toDate.setText("by " + todoDateTime.value.format(TodoDateTime.PRINT_FORMAT));
         }
-        /*
-        task.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        */
     }
 
     @Override

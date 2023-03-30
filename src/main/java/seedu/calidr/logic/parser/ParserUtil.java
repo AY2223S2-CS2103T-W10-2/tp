@@ -31,7 +31,8 @@ import seedu.calidr.model.task.params.TodoDateTime;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
     private static final Map<String, LocalDateTime> KEY_DATE_MAP = Map.of(
             "today", LocalDateTime.now(),
             "tomorrow", LocalDateTime.now().plusDays(1),
@@ -131,9 +132,8 @@ public class ParserUtil {
         if (keyDateTime.isPresent()) {
             return keyDateTime.get().toLocalDate();
         }
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
-            return LocalDate.parse(dateText, dateTimeFormatter);
+            return LocalDate.parse(dateText, DATE_FORMAT);
         } catch (DateTimeParseException e) {
             throw new ParseException("Date-times should be of the format DD-MM-YYYY");
         }
@@ -153,9 +153,8 @@ public class ParserUtil {
         if (keyDateTime.isPresent()) {
             return keyDateTime.get();
         }
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
         try {
-            return LocalDateTime.parse(dateTimeText, dateTimeFormatter);
+            return LocalDateTime.parse(dateTimeText, DATETIME_FORMAT);
 
         } catch (DateTimeParseException e) {
             throw new ParseException("Date-times should be of the format DD-MM-YYYY hhmm");
@@ -255,6 +254,7 @@ public class ParserUtil {
 
     //@@author vaidyanaath-reused
     // Reused from AB3 code.
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

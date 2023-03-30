@@ -4,8 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
+import java.util.function.Function;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import seedu.calidr.MainApp;
 
 /**
@@ -85,4 +88,22 @@ public abstract class UiPart<T> {
         return requireNonNull(fxmlFileUrl);
     }
 
+    /**
+     * Utility method to set the text of a label if the condition is true, and drop the label otherwise.
+     */
+    public static void setIf(Label label, String text, boolean condition) {
+        if (condition) {
+            label.setText(text);
+            return;
+        }
+        label.setVisible(false);
+        label.setManaged(false);
+    }
+
+    public static <T> void setIf(Label label, Optional<T> optionalT, Function<T, String> extractor) {
+        optionalT.ifPresentOrElse(t -> label.setText(extractor.apply(t)), () -> {
+            label.setVisible(false);
+            label.setManaged(false);
+        });
+    }
 }
