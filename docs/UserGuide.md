@@ -112,7 +112,7 @@ mutually-inclusive elements (if <em>one</em> element is present, then <em>anothe
    accepts and automatically parser the following keywords as date-times:
 
    `today`, `tomorrow`, `next week`, `next month`, `next year`
-7. Tasks are uniquely identified by their **task index**. This is given in the list panel, and is also used to refer to
+7. Tasks are uniquely identified by their **task index**. This is given in the [list panel](#ui-terminology), and is also used to refer to
    tasks in commands.
 
 ### UI terminology
@@ -132,9 +132,8 @@ mutually-inclusive elements (if <em>one</em> element is present, then <em>anothe
 
 1. **List panel**
 
-   The list panel is where Calidr will display the list of tasks that match your command. This usually
-   just shows all the tasks in the calendar, but can
-   be [filtered by title, date, or other criteria](#searching-and-filtering-for-tasks-search).
+   The list panel is where Calidr will display a list of the _current selection_ of tasks, along with their [task index](#data-terminology), available to commands. This usually
+   just shows all the tasks in the calendar, unless you just tried to [filtering tasks by title](#searching-and-filtering-for-tasks-search).
 
 1. **Result panel**
 
@@ -162,7 +161,7 @@ Shows a message explaining how to access this help page.
       Adds a new ToDo with the title `CS2103T tP`, due today, with description `Complete the tP`, location `Online`, a
       high priority, and tags `CS2103T` and `tP`.
 
-  You should see the following in the calendar and results panel respectively:
+  You should see the following in the [calendar and results panel](#ui-terminology) respectively:
 
 | Calendar panel                  | Results Panel                |
 |---------------------------------|------------------------------|
@@ -184,7 +183,7 @@ Shows a message explaining how to access this help page.
       Adds a new event with the title `CS2103T Tutorial`, starting today and ending on the 31st of March 2023 at 4pm,
       with description `Lecture on UML`, location `Online`, a high priority, and tags `CS2103T` and `Tutorial`.
 
-  You should see the following in the calendar and results panel respectively:
+  You should see the following in the [calendar and results panel](#ui-terminology) respectively:
 
 | Calendar panel                  | Results Panel                |
 |---------------------------------|------------------------------|
@@ -225,25 +224,26 @@ Examples:
 
 #### Searching and filtering for tasks: `search`
 
-Searches for tasks with matching keywords in their fields. Filtered tasks are displayed in a list to the side.
+Searches for tasks with matching keywords in their fields. The [list panel](#ui-terminology) is updated to show only filtered tasks.
 
 <div markdown="block" class="alert alert-info">
 🕮 
 <ul>
 <li>Keyword matching is case-insensitive</li>
     <li>All tasks whose titles have any of the given keywords will be displayed in the list.</li>
-    <li>The entire keyword must be contained in the title of the task for the task to be displayed.</li>
+    <li>You can only run commands on tasks currently displayed in the list panel.</li>
+    <li>If there are no matches, all tasks are displayed.</li>
+    <li>To manually clear your filter/reset the list panel, run the command without any parameters: <code>search</code></li>
 </ul>    
 </div>
 
-Format: `search KEYWORD [MORE KEYWORDS]...`
+Format: `search [KEYWORD]...`
 
 Examples:
 
 - `search book`
 - `search assignment homework`
-
-<!--- TODO -->
+- `search`: Displays all tasks.
 
 #### Deleting a task: `delete`
 
@@ -264,7 +264,7 @@ Example: for a task which is an event of index 4,
 
 #### Switching to a different layout: `page`
 
-By default, the calendar panel is displayed in a monthly-layout. A weekly or daily-layout is supported if you wish to
+By default, the [calendar panel](#ui-terminology) is displayed in a monthly-layout. A weekly or daily-layout is supported if you wish to
 view more or less tasks.
 
 Format: `page LAYOUT`, where `LAYOUT` is one of `month`, `week`, or `day`.
@@ -275,7 +275,7 @@ Example: `page week`
 
 #### Viewing a different date: `view`
 
-By default, the calendar panel is focused on the current date. When you wish to view a different month, week or day, you
+By default, the [calendar panel](#ui-terminology) is focused on the current date. When you wish to view a different month, week or day, you
 can use the `view` command.
 
 Format: `view <date-time>`.
@@ -287,7 +287,7 @@ Example:
 
 #### Showing all the details of a task: `show`
 
-The GUI displays a condensed representation of tasks in both the calendar and list panels. This commmand shows all the
+The GUI displays a condensed representation of tasks in both the [calendar and list panels](#ui-terminology). This commmand shows all the
 details of a particular task, including its description, location and tags, in a pop-up dialog.
 
 Format: `show TASK_INDEX`
@@ -305,7 +305,8 @@ Example: `show 2`
 | **Edit**        | `edit TASK_INDEX [t/ <title>] [by/ <date-time>] [from/ <date-time>] [to/ <date-time>] [d/ <description>] [l/ <location>] [p/ <priority>] [tag/ <tag>]...` <br> e.g. `edit 2 t/ Essay by/ 04-04-2023 2359 d/700 words p/ high tag/ ES2660`                            |
 | **Mark**        | `mark TASK_INDEX`<br> e.g., `mark 3`                                                                                                                                                                                                                                 |
 | **Unmark**      | `unmark TASK_INDEX`<br> e.g., `unmark 1`                                                                                                                                                                                                                             |                                                                                                                                                                                                      
-| **Delete**      | `delete TASK_INDEX`<br> e.g., `delete 2`                                                                                                                                                                                                                             |                                                                                                                                                             |
+| **Search**      | `search [KEYWORD]...`<br> e.g., `search book`                                                                                                                                                                                                                        |
+| **Delete**      | `delete TASK_INDEX`<br> e.g., `delete 2`                                                                                                                                                                                                                             |
 | **Help**        | `help`                                                                                                                                                                                                                                                               |
 | **Switch Page** | `page LAYOUT`<br> e.g., `page day`                                                                                                                                                                                                                                   |
 | **View Date**   | `view <date-time>`<br> e.g., `view next week`                                                                                                                                                                                                                        |

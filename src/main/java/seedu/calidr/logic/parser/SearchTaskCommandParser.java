@@ -1,11 +1,10 @@
 package seedu.calidr.logic.parser;
 
-import static seedu.calidr.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.Arrays;
 
 import seedu.calidr.logic.commands.SearchTaskCommand;
 import seedu.calidr.logic.parser.exceptions.ParseException;
+import seedu.calidr.model.Model;
 import seedu.calidr.model.task.predicates.TitleContainsKeywordsPredicate;
 
 /**
@@ -21,8 +20,7 @@ public class SearchTaskCommandParser implements Parser<SearchTaskCommand> {
     public SearchTaskCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchTaskCommand.MESSAGE_USAGE));
+            return new SearchTaskCommand(Model.PREDICATE_SHOW_ALL_TASKS);
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
