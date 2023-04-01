@@ -36,7 +36,7 @@ public class AddEventCommand extends Command {
             + PREFIX_TAG + " Lecture";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the task list.";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This task already exists in the task list.";
 
     private final Event toAdd;
 

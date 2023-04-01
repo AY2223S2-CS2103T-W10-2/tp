@@ -60,10 +60,4 @@ public class ToDo extends Task {
 
         return sb.toString();
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return super.equals(other)
-                && byDateTime.equals(((ToDo) other).byDateTime);
-    }
 }

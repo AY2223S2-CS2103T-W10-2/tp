@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import com.calendarfx.view.page.DayPage?>
 <?import com.calendarfx.view.page.MonthPage?>
 <?import com.calendarfx.view.page.WeekPage?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      fx:id="calendarPanel"
-      xmlns="http://javafx.com/javafx/19">
-    <MonthPage fx:id="monthPage" VBox.vgrow="ALWAYS"/>
-    <WeekPage fx:id="weekPage" VBox.vgrow="ALWAYS"/>
-    <DayPage fx:id="dayPage" VBox.vgrow="ALWAYS"/>
+<VBox fx:id="calendarPanel" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@calendar.css" />
+    </stylesheets>
+    <MonthPage fx:id="monthPage" VBox.vgrow="ALWAYS" />
+    <WeekPage fx:id="weekPage" VBox.vgrow="ALWAYS" />
+    <DayPage fx:id="dayPage" VBox.vgrow="ALWAYS" />
 </VBox>

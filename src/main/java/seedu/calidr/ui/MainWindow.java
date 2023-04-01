@@ -132,7 +132,7 @@ public class MainWindow extends UiPart<Stage> {
         */
 
         calendarPanel = new CalendarPanel();
-        calendarPanel.updateCalendar(logic.getTaskList());
+        calendarPanel.initCalendar(logic.getTaskList());
         calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
@@ -146,6 +146,15 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBox.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().isArrowKey()) {
+                switch (event.getCode()) {
+                case UP:
+                case DOWN:
+                    calendarPanel.handleAsScrollEvent(event);
+                }
+            }
+        });
     }
 
     /**
@@ -224,8 +233,6 @@ public class MainWindow extends UiPart<Stage> {
                 calendarPanel.setPage(commandResult.getPageType().get());
             } else if (commandResult.getPopupTask().isPresent()) {
                 this.launchTaskPopup(commandResult.getPopupTask().get());
-            } else {
-                calendarPanel.updateCalendar(logic.getTaskList()); // Entry point for calendar update
             }
 
             return commandResult;

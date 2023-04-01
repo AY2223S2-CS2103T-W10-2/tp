@@ -60,10 +60,4 @@ public class Event extends Task {
 
         return sb.toString();
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return super.equals(other)
-                && eventDateTimes.equals(((Event) other).eventDateTimes);
-    }
 }
