@@ -108,19 +108,22 @@ public class EditTaskCommand extends Command {
 
         assert taskToEdit != null;
 
+        Title updatedTitle = editTaskDescriptor.getTitle().orElse(taskToEdit.getTitle());
+
+        Description oldDescription = taskToEdit.getDescription().orElse(null);
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(oldDescription);
+        Location oldLocation = taskToEdit.getLocation().orElse(null);
+        Location updatedLocation = editTaskDescriptor.getLocation().orElse(oldLocation);
+
+        Priority updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
+
+        Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
+
         if (taskToEdit instanceof ToDo) {
             ToDo todoToEdit = (ToDo) taskToEdit;
 
-            Title updatedTitle = editTaskDescriptor.getTitle().orElse(todoToEdit.getTitle());
 
-            Description oldDescription = todoToEdit.getDescription().orElse(null);
-            Description updatedDescription = editTaskDescriptor.getDescription().orElse(oldDescription);
-            Location oldLocation = todoToEdit.getLocation().orElse(null);
-            Location updatedLocation = editTaskDescriptor.getLocation().orElse(oldLocation);
-
-            Priority updatedPriority = editTaskDescriptor.getPriority().orElse(todoToEdit.getPriority());
             TodoDateTime updatedBy = editTaskDescriptor.getByDateTime().orElse(todoToEdit.getBy());
-            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(todoToEdit.getTags());;
 
             ToDo updatedTodo = new ToDo(updatedTitle, updatedBy);
             updatedTodo.setDescription(updatedDescription);
@@ -132,14 +135,6 @@ public class EditTaskCommand extends Command {
 
         } else if (taskToEdit instanceof Event) {
             Event eventToEdit = (Event) taskToEdit;
-
-            Title updatedTitle = editTaskDescriptor.getTitle().orElse(eventToEdit.getTitle());
-            Description oldDescription = eventToEdit.getDescription().orElse(null);
-            Description updatedDescription = editTaskDescriptor.getDescription().orElse(oldDescription);
-            Location oldLocation = eventToEdit.getLocation().orElse(null);
-            Location updatedLocation = editTaskDescriptor.getLocation().orElse(oldLocation);
-            Priority updatedPriority = editTaskDescriptor.getPriority().orElse(eventToEdit.getPriority());
-            Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(eventToEdit.getTags());
 
             LocalDateTime updatedFromDateTime = editTaskDescriptor.getFromDateTime()
                     .orElse(eventToEdit.getEventDateTimes().from);
@@ -160,8 +155,6 @@ public class EditTaskCommand extends Command {
             return updatedEvent;
 
         } else {
-            // error
-            // todo store messages as constant in messages
             throw new CommandException("Invalid task type!");
         }
     }

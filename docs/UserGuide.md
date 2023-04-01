@@ -97,7 +97,7 @@ mutually-inclusive elements (if <em>one</em> element is present, then <em>anothe
 ### Data terminology
 
 1. Elements on a calendar are referred to as **Tasks**.
-2. Tasks must have a **title**.
+2. Tasks must have a *unique* **title**.
 3. A task can have an optional **description**, **location**, and multiple **tags(s)**.
 4. Tasks have an associated **priority**.
     1. Priority is one of `HIGH`, `MEDIUM` or `LOW`.
@@ -112,6 +112,10 @@ mutually-inclusive elements (if <em>one</em> element is present, then <em>anothe
    accepts and automatically parser the following keywords as date-times:
 
    `today`, `tomorrow`, `next week`, `next month`, `next year`
+<div markdown="block" class="alert alert-info">
+🕮 If the date-time you provide is a little off, Calidr will still try its best to parse it. For instance, the time <code>2400</code> will automatically resolve to <code>0000</code> the next day, and <code>29-02-2023</code> will automatically resolve to <code>28-02-2023</code> as 2023 is not a leap year.
+</div>
+
 7. Tasks are uniquely identified by their **task index**. This is given in the [list panel](#ui-terminology), and is also used to refer to
    tasks in commands.
 
@@ -127,7 +131,7 @@ mutually-inclusive elements (if <em>one</em> element is present, then <em>anothe
 1. **Calendar panel**
 
    The calendar panel is where you can view your tasks graphically. Tasks are displayed as coloured
-   blocks, with green being **ToDos** and blue being **Events**. The calendar panel also displays the _focused_ date and
+   blocks, with green being **ToDos** and blue being **Events**. High priority tasks have a light pink background, low priority tasks are in italics, and marked tasks are translucent. The calendar panel also displays the _focused_ date and
    time, which [may not be the current time](#viewing-a-different-date-view).
 
 1. **List panel**

@@ -132,7 +132,7 @@ public class MainWindow extends UiPart<Stage> {
         */
 
         calendarPanel = new CalendarPanel();
-        calendarPanel.updateCalendar(logic.getTaskList());
+        calendarPanel.initCalendar(logic.getTaskList());
         calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
@@ -224,8 +224,6 @@ public class MainWindow extends UiPart<Stage> {
                 calendarPanel.setPage(commandResult.getPageType().get());
             } else if (commandResult.getPopupTask().isPresent()) {
                 this.launchTaskPopup(commandResult.getPopupTask().get());
-            } else {
-                calendarPanel.updateCalendar(logic.getTaskList()); // Entry point for calendar update
             }
 
             return commandResult;

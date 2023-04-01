@@ -16,6 +16,7 @@ import com.calendarfx.view.page.PageBase;
 import com.calendarfx.view.page.WeekPage;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.ScrollEvent;
@@ -95,6 +96,9 @@ public class CalendarPanel extends UiPart<Region> {
                 .getDayView()
                 .setEarlyLateHoursStrategy(DayViewBase
                         .EarlyLateHoursStrategy.SHOW);
+        fixHourHeight(dayPage.getDetailedDayView());
+        fixHourHeight(weekPage.getDetailedWeekView());
+
         calendarViews.forEach((key, view) -> {
             view.setContextMenuCallback(param -> null);
             view.setShowNavigation(false);
@@ -105,6 +109,12 @@ public class CalendarPanel extends UiPart<Region> {
         });
         setPage(currentPage);
         goToToday();
+    }
+
+    private void fixHourHeight(DayViewBase dayViewBase) {
+        dayViewBase.setHourHeight(70);
+        dayViewBase.setHoursLayoutStrategy(
+                DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
     }
 
     public PageBase getActivePage() {
@@ -163,17 +173,39 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     /**
-     * Update the calendar entries with the given task list.
-     *
-     * @param taskList the task list
+     * Initialize the calendar entries with the given task list, and a listener to update the calendar.
      */
-    public void updateCalendar(ReadOnlyTaskList taskList) {
-        taskEntryCalendarMap.values().forEach(Calendar::clear);
+    public void initCalendar(ReadOnlyTaskList taskList) {
+        // taskEntryCalendarMap.values().forEach(Calendar::clear);
+
         taskList.getTaskList().forEach(task -> {
             Class<? extends Task> taskClass = task.getClass();
             if (taskEntryCalendarMap.containsKey(taskClass)) {
                 Calendar<TaskEntry> calendar = taskEntryCalendarMap.get(taskClass);
                 calendar.addEntry(TaskEntryUtil.convert(task));
+            }
+        });
+
+        taskList.getTaskList().addListener((ListChangeListener<Task>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    c.getAddedSubList().forEach(task -> {
+                        Class<? extends Task> taskClass = task.getClass();
+                        if (taskEntryCalendarMap.containsKey(taskClass)) {
+                            Calendar<TaskEntry> calendar = taskEntryCalendarMap.get(taskClass);
+                            calendar.addEntry(TaskEntryUtil.convert(task));
+                        }
+                    });
+                }
+                if (c.wasRemoved()) {
+                    c.getRemoved().forEach(task -> {
+                        Class<? extends Task> taskClass = task.getClass();
+                        if (taskEntryCalendarMap.containsKey(taskClass)) {
+                            Calendar<TaskEntry> calendar = taskEntryCalendarMap.get(taskClass);
+                            calendar.findEntries(task.getTitle().value).forEach(calendar::removeEntry);
+                        }
+                    });
+                }
             }
         });
     }

@@ -1,7 +1,6 @@
 package seedu.calidr.commons.util;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Objects;
 
 import com.calendarfx.model.Interval;
@@ -10,18 +9,11 @@ import seedu.calidr.model.TaskEntry;
 import seedu.calidr.model.task.Event;
 import seedu.calidr.model.task.Task;
 import seedu.calidr.model.task.ToDo;
-import seedu.calidr.model.task.params.Priority;
 
 /**
  * Task to TaskEntry converter.
  */
 public final class TaskEntryUtil {
-
-    private static final Map<Priority, String> PRIORITY_SHORT = Map.of(
-            Priority.LOW, "L",
-            Priority.MEDIUM, "M",
-            Priority.HIGH, "H"
-    );
 
     /**
      * Converts the Calidr Task object to a CalendarFX TaskEntry object.
@@ -48,21 +40,12 @@ public final class TaskEntryUtil {
         } else {
             throw new IllegalArgumentException("Task type not supported");
         }
-        taskEntry.setTitle(toCustomString(task));
+        taskEntry.setTitle(task.getTitle().value);
+
         taskEntry.setInterval(interval);
         taskEntry.setPriority(task.getPriority());
         taskEntry.setIsDone(task.isDone());
         taskEntry.setUserObject(task);
-
         return taskEntry;
-    }
-
-    private static String toCustomString(Task task) {
-        String tick = task.isDone() ? "✓" : "  ";
-        return String.format("%s\t[%s] {%s}",
-                task.getTitle(),
-                tick,
-                PRIORITY_SHORT.getOrDefault(task.getPriority(), "M")
-        );
     }
 }
