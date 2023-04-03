@@ -152,6 +152,9 @@ public class MainWindow extends UiPart<Stage> {
                 case UP:
                 case DOWN:
                     calendarPanel.handleAsScrollEvent(event);
+                    break;
+                default:
+                    break;
                 }
             }
         });

@@ -212,6 +212,9 @@ public class CalendarPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Handles arrow key events to scroll the calendar.
+     */
     public void handleAsScrollEvent(KeyEvent event) {
         switch (event.getCode()) {
         case UP:
@@ -221,6 +224,8 @@ public class CalendarPanel extends UiPart<Region> {
         case DOWN:
             scroll(-20);
             event.consume();
+            break;
+        default:
             break;
         }
     }

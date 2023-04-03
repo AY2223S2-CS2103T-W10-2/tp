@@ -35,6 +35,8 @@ public class TaskEntry extends Entry<Task> {
         case LOW:
             this.getStyleClass().add("entry-task-priority-low");
             break;
+        default:
+            break;
         }
         this.priority.set(priority);
     }

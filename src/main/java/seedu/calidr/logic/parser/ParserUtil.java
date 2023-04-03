@@ -234,7 +234,9 @@ public class ParserUtil {
             return LocalDateTime.parse(dateTimeText, dateTimeFormatter);
 
         } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid date-time. Date-times should be of the format DD-MM-YYYY hhmm and correspond to existing dates.");
+            throw new ParseException("Invalid date-time."
+                    + "Date-times should be of the format DD-MM-YYYY hhmm"
+                    + "and correspond to existing dates.");
         }
     }
 
