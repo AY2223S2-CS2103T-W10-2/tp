@@ -59,7 +59,10 @@ public final class TaskEntryUtil {
         return taskEntry;
     }
 
-    private static String toCustomString(Task task) {
+    /**
+     * Converts the title of a task to a displayable string.
+     **/
+    public static String toCustomString(Task task) {
         String tick = task.isDone() ? "✓" : "  ";
         return String.format("%s\t[%s] {%s}",
                 task.getTitle(),

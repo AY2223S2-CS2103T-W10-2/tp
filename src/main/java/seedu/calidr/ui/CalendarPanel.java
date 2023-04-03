@@ -189,6 +189,7 @@ public class CalendarPanel extends UiPart<Region> {
         });
 
         taskList.getTaskList().addListener((ListChangeListener<Task>) c -> {
+            logger.info("CalendarPanel: TaskList changed, updating calendar");
             while (c.next()) {
                 if (c.wasAdded()) {
                     c.getAddedSubList().forEach(task -> {
@@ -204,7 +205,8 @@ public class CalendarPanel extends UiPart<Region> {
                         Class<? extends Task> taskClass = task.getClass();
                         if (taskEntryCalendarMap.containsKey(taskClass)) {
                             Calendar<TaskEntry> calendar = taskEntryCalendarMap.get(taskClass);
-                            calendar.findEntries(task.getTitle().value).forEach(calendar::removeEntry);
+                            calendar.findEntries(TaskEntryUtil.toCustomString(task))
+                                    .forEach(calendar::removeEntry);
                         }
                     });
                 }
