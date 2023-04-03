@@ -93,7 +93,9 @@ public class UniqueTaskList implements Iterable<Task> {
         if (targetIndex == -1) {
             throw new TaskNotFoundException();
         }
-        internalList.get(targetIndex).mark();
+        Task task = internalList.remove(targetIndex);
+        task.mark();
+        internalList.add(targetIndex, task);
     }
 
     /**
@@ -110,7 +112,9 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new TaskNotFoundException();
         }
 
-        internalList.get(targetIndex).unmark();
+        Task task = internalList.remove(targetIndex);
+        task.unmark();
+        internalList.add(targetIndex, task);
     }
 
     public void setTaskPriority(Task target, Priority priority) {

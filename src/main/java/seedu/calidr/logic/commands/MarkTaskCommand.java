@@ -48,10 +48,6 @@ public class MarkTaskCommand extends Command {
 
         model.markTask(taskToMark);
 
-        // Need to trigger update on UI due to observer pattern.
-        model.deleteTask(taskToMark);
-        model.addTask(taskToMark);
-
         return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark));
     }
 
