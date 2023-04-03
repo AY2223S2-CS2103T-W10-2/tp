@@ -2,9 +2,11 @@ package seedu.calidr.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Predicate;
+
 import seedu.calidr.commons.core.Messages;
 import seedu.calidr.model.Model;
-import seedu.calidr.model.task.predicates.TitleContainsKeywordsPredicate;
+import seedu.calidr.model.task.Task;
 
 /**
  * Finds and lists all tasks whose title contains any of the
@@ -15,12 +17,12 @@ public class SearchTaskCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose titles contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Parameters: [KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " assignment homework";
 
-    private final TitleContainsKeywordsPredicate predicate;
+    private final Predicate<Task> predicate;
 
-    public SearchTaskCommand(TitleContainsKeywordsPredicate predicate) {
+    public SearchTaskCommand(Predicate<Task> predicate) {
         this.predicate = predicate;
     }
 
@@ -29,6 +31,14 @@ public class SearchTaskCommand extends Command {
         requireNonNull(model);
 
         model.updateFilteredTaskList(predicate);
+
+        if (model.getFilteredTaskList().size() == 0) {
+            model.updateFilteredTaskList(Model.PREDICATE_SHOW_ALL_TASKS);
+            return new CommandResult(Messages.MESSAGE_NO_TASKS_LISTED);
+        } else if (model.getFilteredTaskList().size() == model.getTaskList().getTaskList().size()) {
+            return new CommandResult(String.format(Messages.MESSAGE_ALL_TASKS_LISTED,
+                    model.getFilteredTaskList().size()));
+        }
         return new CommandResult(
                 String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW,
                         model.getFilteredTaskList().size()));

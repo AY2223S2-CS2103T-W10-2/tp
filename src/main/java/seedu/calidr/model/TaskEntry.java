@@ -27,6 +27,17 @@ public class TaskEntry extends Entry<Task> {
     }
 
     public final void setPriority(Priority priority) {
+        this.getStyleClass().removeIf(style -> style.contains("entry-task-priority-"));
+        switch (priority) {
+        case HIGH:
+            this.getStyleClass().add("entry-task-priority-high");
+            break;
+        case LOW:
+            this.getStyleClass().add("entry-task-priority-low");
+            break;
+        default:
+            break;
+        }
         this.priority.set(priority);
     }
 
@@ -39,6 +50,11 @@ public class TaskEntry extends Entry<Task> {
     }
 
     public final void setIsDone(boolean isDone) {
+        if (isDone) {
+            this.getStyleClass().add("entry-task-done");
+        } else {
+            this.getStyleClass().remove("entry-task-done");
+        }
         this.isDone.set(isDone);
     }
 
@@ -56,5 +72,22 @@ public class TaskEntry extends Entry<Task> {
     @Override
     public String toString() {
         return "Task Entry: " + getTitle() + " " + getPriority() + " " + getIsDone();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof TaskEntry)) {
+            return false;
+        }
+        TaskEntry otherTaskEntry = (TaskEntry) other;
+        return otherTaskEntry.getTitle().equals(getTitle());
+    }
+
+    @Override
+    public boolean matches(String title) {
+        return getTitle().equals(title);
     }
 }

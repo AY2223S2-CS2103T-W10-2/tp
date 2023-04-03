@@ -65,14 +65,14 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public void saveTaskList(ReadOnlyTaskList TaskList) throws IOException {
-        taskListStorage.saveTaskList(TaskList);
+    public void saveTaskList(ReadOnlyTaskList taskList) throws IOException {
+        taskListStorage.saveTaskList(taskList);
     }
 
     @Override
-    public void saveTaskList(ReadOnlyTaskList TaskList, Path filePath) throws IOException {
+    public void saveTaskList(ReadOnlyTaskList taskList, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        taskListStorage.saveTaskList(TaskList, filePath);
+        taskListStorage.saveTaskList(taskList, filePath);
     }
 
 }

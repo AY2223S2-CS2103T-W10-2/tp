@@ -94,7 +94,6 @@ public abstract class Task {
         if (otherTask == this) {
             return true;
         }
-
         return equals(otherTask);
     }
 

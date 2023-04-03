@@ -45,8 +45,12 @@ public class UnmarkTaskCommand extends Command {
         }
 
         Task taskToUnmark = readOnlyTaskList.get(index.getZeroBased());
-
         model.unmarkTask(taskToUnmark);
+
+        // Need to trigger update on UI due to observer pattern.
+        model.deleteTask(taskToUnmark);
+        model.addTask(taskToUnmark);
+
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
     }
 

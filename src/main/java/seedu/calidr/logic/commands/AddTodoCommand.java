@@ -33,7 +33,7 @@ public class AddTodoCommand extends Command {
             + PREFIX_TAG + " Assignment";
 
     public static final String MESSAGE_SUCCESS = "New to-do added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TODO = "This to-do already exists in the task list.";
+    public static final String MESSAGE_DUPLICATE_TODO = "This task already exists in the task list.";
 
     private final ToDo toAdd;
 

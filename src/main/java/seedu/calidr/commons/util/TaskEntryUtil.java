@@ -39,16 +39,17 @@ public final class TaskEntryUtil {
             interval = new Interval(event.getEventDateTimes().from, event.getEventDateTimes().to);
         } else if (task instanceof ToDo) {
             ToDo toDo = (ToDo) task;
-            LocalDateTime startDt = toDo.getBy().value;
-            LocalDateTime endDt = startDt.withHour(23).withMinute(59).withSecond(59);
-            if (endDt.isAfter(startDt.plusHours(1))) {
-                endDt = startDt.plusHours(1);
+            LocalDateTime endDt = toDo.getBy().value;
+            LocalDateTime startDt = endDt.withHour(0).withMinute(0).withSecond(0);
+            if (startDt.isBefore(endDt.minusMinutes(30))) {
+                startDt = endDt.minusMinutes(30);
             }
             interval = new Interval(startDt, endDt);
         } else {
-            throw new IllegalArgumentException("Unknown task type");
-            // TODO: Custom Exception
+            throw new IllegalArgumentException("Task type not supported");
         }
+        // Rolled back due to v1.4 feature freeze
+        // taskEntry.setTitle(task.getTitle());
         taskEntry.setTitle(toCustomString(task));
         taskEntry.setInterval(interval);
         taskEntry.setPriority(task.getPriority());

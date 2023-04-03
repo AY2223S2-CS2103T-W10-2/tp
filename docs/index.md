@@ -11,8 +11,7 @@ title: Calidr
 Calidr is a **time-management and scheduling calendar application** that offers integrated support for university
 students to manage their classes, assignments, deadlines, and tasks from one place.
 
-* If you are interested in using Calidr, head over to the [_Quick Start_ section of the **User Guide
-  **](UserGuide.html#quick-start).
+* If you are interested in using Calidr, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
 * If you are interested about developing Calidr, the [**Developer Guide**](DeveloperGuide.html) is a good place to
   start.
 
@@ -27,8 +26,7 @@ This project is based on the AddressBook-Level3 project created by the [SE-EDU i
 
 **Acknowledgements**
 
-* Libraries used:
-  *
-  AB3: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
-  *
-  Calidr: [CalendarFX](https://github.com/dlsc-software-consulting-gmbh/CalendarFX), [ical4j](https://github.com/ical4j/ical4j)
+Libraries used:
+
+* AB3: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
+* Calidr: [CalendarFX](https://github.com/dlsc-software-consulting-gmbh/CalendarFX), [ical4j](https://github.com/ical4j/ical4j)
