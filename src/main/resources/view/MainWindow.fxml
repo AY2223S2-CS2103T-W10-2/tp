@@ -18,7 +18,7 @@
          type="javafx.stage.Stage"
          xmlns="http://javafx.com/javafx/19">
     <icons>
-        <Image url="@/images/address_book_32.png"/>
+        <Image url="@/images/calidr_icon.png"/>
     </icons>
     <scene>
         <Scene>
